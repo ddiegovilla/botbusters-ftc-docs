@@ -2,6 +2,8 @@
 
 Guía en español para los alumnos del equipo: instalación, setup, estructura del código, chasis, intake e indexer.
 
+**Abrir la guía:** https://ddiegovilla.github.io/botbusters-ftc-docs/
+
 ## Publicación
 
 GitHub Pages publica la raíz de la rama `main`. El archivo `.nojekyll` permite servir directamente el HTML, CSS, JavaScript y las imágenes.
