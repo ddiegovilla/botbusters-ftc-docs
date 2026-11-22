@@ -1,6 +1,6 @@
 # Botbusters 13531 · Guía de programación FTC
 
-Guía en español para los alumnos del equipo: instalación, setup, estructura del código, chasis, intake e indexer.
+Guía en español para los alumnos del equipo: instalación, setup, conexión al Control Hub, estructura del código, chasis, intake e indexer.
 
 **Abrir la guía:** https://ddiegovilla.github.io/botbusters-ftc-docs/
 

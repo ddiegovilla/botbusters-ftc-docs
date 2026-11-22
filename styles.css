@@ -138,3 +138,10 @@ main{margin-right:0}
 #chassis-page .details-body p{font-size:14px}
 #chassis-page p code,#chassis-page dd code,#chassis-page td code{overflow-wrap:anywhere}
 @media(max-width:520px){.chassis-files th:first-child{width:44%}.chassis-files code{font-size:12px}.chassis-diagnostics tbody th{min-width:110px}.chassis-source-note{font-size:12px!important}}
+
+/* Control Hub terminal commands use the existing copy control. */
+#connection-page p code{overflow-wrap:anywhere}
+#connection-page .connection-command{align-items:center;gap:14px}
+#connection-page .connection-command code{min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:14px;line-height:1.7}
+#connection-page .connection-command .copy-button{flex-shrink:0}
+#connection-page .connection-reference{font-size:13px}
