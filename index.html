@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c43b38">
+  <meta name="description" content="Guía de programación de Botbusters FTC 13531: instalación, setup, arquitectura del robot y mecanismos paso a paso.">
+  <title>Instalación · Botbusters Docs</title>
+  <link rel="icon" href="assets/botbusters-logo.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="lesson-code.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#content">Ir al contenido</a>
+  <header class="topbar">
+    <a href="#instalacion" class="brand" aria-label="Botbusters Docs, inicio"><img class="brand-logo" src="assets/botbusters-logo.png" alt="Logo de Botbusters"><span>BOTBUSTERS <span class="docs-word">/ docs</span></span></a>
+    <div class="header-actions"><span class="season">FTC 13531 <span>@ddiegovilanueva</span></span><button class="search-trigger" id="open-search" aria-label="Buscar en la guía"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><span>Buscar en la guía</span><kbd>⌘ K</kbd></button><button class="icon-button" id="theme" aria-label="Activar modo oscuro"><svg viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></button><button class="icon-button mobile-menu" id="menu" aria-label="Abrir menú" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="Navegación de la guía">
+    <div class="sidebar-head"><span class="eyebrow">FTC</span></div>
+    <p class="nav-label">PRIMEROS PASOS</p>
+    <nav class="primary-nav"><a data-page="instalacion" href="#instalacion"><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg>Instalación<span class="nav-count">01</span></a><div class="subnav" data-subnav="instalacion"><a href="#instalacion/android-studio">Android Studio</a><a href="#instalacion/java">Java / JDK</a><a href="#instalacion/adb">ADB</a></div><a data-page="setup" href="#setup"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 7.5v9M18 10.5v1a6 6 0 0 1-6 6H9"/></svg>Setup<span class="nav-count">02</span></a><div class="subnav" data-subnav="setup"><a href="#setup/cuenta">Tu cuenta en GitLab</a><a href="#setup/acceso">Acceso al equipo</a><a href="#setup/repositorio">Clonar el repositorio</a><a href="#setup/rama">Rama de trabajo</a></div></nav><p class="nav-label code-nav-label">EL CÓDIGO</p><nav class="primary-nav"><a data-page="codigo" href="#codigo"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></svg>Conoce el código</a><div class="subnav" data-subnav="codigo" hidden><a href="#codigo/donde-corre">Dónde se ejecuta</a><a href="#codigo/mapa-proyecto">Mapa del proyecto</a><a href="#codigo/piezas-codigo">Las piezas principales</a><a href="#codigo/robot-mecanismos">Robot y mecanismos</a><a href="#codigo/robotopmode">RobotOpMode</a><a href="#codigo/ciclo-opmode">Ciclo de un OpMode</a><a href="#codigo/integrar-mecanismo">Integrar un mecanismo</a><a href="#codigo/boton-motor">Del botón al motor</a><a href="#codigo/por-donde-empezar">Por dónde empezar</a><a href="#codigo/probar-cambios">Compilar y probar</a></div></nav>
+<p class="nav-label code-nav-label">MECANISMOS</p><nav class="primary-nav"><a data-page="chasis" href="#chasis"><svg viewBox="0 0 24 24"><path d="M5 7h14v10H5zM3 5v4m18-4v4M3 15v4m18-4v4M9 10h6v4H9z"/></svg>Chasis</a><div class="subnav" data-subnav="chasis" hidden><a href="#chasis/chasis-pedro">La base de Pedro</a><a href="#chasis/chasis-odometria">Odometría</a><a href="#chasis/chasis-archivos">Archivos del chasis</a><a href="#chasis/chasis-opmode">Conexión al OpMode</a><a href="#chasis/chasis-teleop">TeleOp</a><a href="#chasis/chasis-autonomo">Autónomo</a><a href="#chasis/chasis-constants">Constants</a><a href="#chasis/chasis-tuning">Tuning</a><a href="#chasis/chasis-diagnostico">Diagnóstico</a><a href="#chasis/chasis-cambios">Qué cambiar</a></div><a data-page="intake" href="#intake"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM8 9h8M8 15h8"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/></svg>Intake</a><div class="subnav" data-subnav="intake" hidden><a href="#intake/intake-crear">Crear clase y carpeta</a><a href="#intake/intake-motor">Motor y estados</a><a href="#intake/intake-periodic">Actualización periódica</a><a href="#intake/intake-comandos">Comandos</a><a href="#intake/intake-default">Recolección y expulsión</a><a href="#intake/intake-robot">Agregar a Robot</a><a href="#intake/intake-opmode">Agregar a RobotOpMode</a><a href="#intake/intake-teleop">TeleOp de prueba</a></div><a data-page="indexer" href="#indexer"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M8 5v14M16 5v14"/></svg>Indexer</a><div class="subnav" data-subnav="indexer" hidden><a href="#indexer/indexer-crear">Crear clase y carpeta</a><a href="#indexer/indexer-motor">Motor y estados</a><a href="#indexer/indexer-periodic">Actualización periódica</a><a href="#indexer/indexer-comandos">Comandos básicos</a><a href="#indexer/indexer-shoot">Comando shoot</a><a href="#indexer/indexer-robot">Agregar a Robot</a><a href="#indexer/indexer-opmode">Agregar a RobotOpMode</a><a href="#indexer/indexer-teleop">TeleOp de prueba</a></div></nav>
+    <div class="sidebar-bottom"><div class="team-stamp"><img class="team-logo" src="assets/botbusters-logo.png" alt="Logo de Botbusters"><span>BOTBUSTERS 13531<br><span>FIRST Tech Challenge</span></span></div></div>
+  </aside>
+  <main id="content" tabindex="-1">
+    <article id="installation-page" class="doc-page">
+      <div class="breadcrumb">Primeros pasos <span>/</span> <strong>Instalación</strong></div>
+      <div class="article-heading"><h1>Todo empieza<br>con las herramientas.</h1><p class="lead">Antes de programar el robot, preparemos tu estación de trabajo. Estas son las tres herramientas que usaremos en Botbusters.</p></div>
+      <div class="tool-strip" aria-label="Herramientas de esta guía"><a href="#instalacion/android-studio"><img src="assets/androidstudio.svg" alt="Logo de Android Studio">Android Studio</a><span>+</span><a href="#instalacion/java"><img src="assets/java.svg" alt="Logo de Java">Java</a><span>+</span><a href="#instalacion/adb"><span class="terminal-icon">&gt;_</span>ADB</a></div>
+      <div class="note"><span class="note-icon">i</span><div><strong>¿Ya tienes alguna instalada?</strong><p>Revisa que abra correctamente. Puedes ir directamente a la siguiente herramienta.</p></div></div>
+      <section id="android-studio" class="tool-section"><div class="section-title"><div class="tool-logo studio"><img src="assets/androidstudio.svg" alt=""></div><div><span class="tool-type">EL ENTORNO DE DESARROLLO</span><h2>Android Studio</h2></div></div><p>Aquí abriremos, escribiremos y compilaremos el código del robot.</p><ol class="instructions"><li>Descarga Android Studio para tu sistema operativo.</li><li>Ejecuta el instalador y sigue el asistente de configuración.</li><li>En el primer inicio, completa la instalación del Android SDK y los componentes que te pida.</li></ol><a class="button primary" href="https://developer.android.com/studio" target="_blank" rel="noopener noreferrer">Descargar Android Studio <svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4"/></svg></a><a class="text-link" href="https://developer.android.com/studio/install" target="_blank" rel="noopener noreferrer">Guía oficial de instalación</a></section>
+      <section id="java" class="tool-section"><div class="section-title"><div class="tool-logo"><img src="assets/java.svg" alt="Logo de Java"></div><div><span class="tool-type">EL LENGUAJE DEL EQUIPO</span><h2>Java / JDK</h2></div></div><p>Programaremos en Java. El <strong>JDK</strong> (Java Development Kit) incluye las herramientas necesarias para compilar el proyecto.</p><div class="inline-tip"><strong>Primero revisa Android Studio.</strong><p>Ya incluye un JDK llamado JetBrains Runtime (JBR). La versión que use el proyecto debe ser compatible con su configuración de Gradle; confírmala con tu mentor antes de instalar otra.</p></div><p>Si el equipo te pide instalar Java por separado, descarga el <strong>JDK</strong> de la versión indicada y sigue el instalador de tu sistema.</p><a class="button secondary" href="https://www.oracle.com/java/technologies/downloads/" target="_blank" rel="noopener noreferrer">Descargas de Java JDK <svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4"/></svg></a><a class="text-link" href="https://developer.android.com/build/jdks" target="_blank" rel="noopener noreferrer">Sobre Java en Android Studio</a></section>
+      <section id="adb" class="tool-section"><div class="section-title"><div class="tool-logo adb-logo">&gt;_</div><div><span class="tool-type">EL PUENTE HACIA EL ROBOT</span><h2>ADB</h2></div></div><p><strong>Android Debug Bridge</strong> es la herramienta que usamos para comunicarnos con el Robot Controller desde la computadora.</p><ol class="instructions"><li>Abre <strong>SDK Manager</strong> en Android Studio. En la pantalla de bienvenida, búscalo en <strong>More Actions</strong>.</li><li>Entra a la pestaña <strong>SDK Tools</strong>.</li><li>Selecciona <strong>Android SDK Platform-Tools</strong> y presiona <strong>Apply</strong> para instalarlo. Este paquete incluye ADB.</li></ol><details class="details"><summary>Comprobar ADB desde la terminal</summary><div class="details-body"><p>Desde la carpeta <code>platform-tools</code> de tu Android SDK, ejecuta:</p><div class="os-tabs" role="tablist" aria-label="Sistema operativo"><button role="tab" aria-selected="true" data-os="unix" id="os-unix" aria-controls="adb-command">macOS / Linux</button><button role="tab" aria-selected="false" data-os="windows" id="os-windows" aria-controls="adb-command">Windows</button></div><div class="code-block" role="tabpanel" id="adb-command" aria-labelledby="os-unix"><code id="adb-code">./adb version</code><button class="copy-button" data-copy="adb-code">Copiar</button></div><p class="muted">Deberías ver la versión de Android Debug Bridge. Si agregaste esa carpeta al PATH, también puedes usar <code>adb version</code> desde cualquier ubicación.</p></div></details><a class="text-link no-margin" href="https://developer.android.com/tools/releases/platform-tools" target="_blank" rel="noopener noreferrer">Documentación oficial de Platform-Tools</a></section>
+      <a class="next-page" href="#setup"><span><span class="next-label">SIGUIENTE</span><strong>Setup</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></a>
+      <footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer>
+    </article>
+    <article id="setup-page" class="doc-page" hidden>
+      <div class="breadcrumb">Primeros pasos <span>/</span> <strong>Setup</strong></div><div class="article-heading"><h1>Tu primera copia<br>del código.</h1><p class="lead">Crea tu cuenta, únete a Botbusters y abre el proyecto en Android Studio.</p></div>
+      <section id="cuenta" class="tool-section first-section"><div class="section-title"><div class="tool-logo"><img src="assets/gitlab.svg" alt="Logo de GitLab"></div><div><span class="tool-type">TU CUENTA</span><h2>Regístrate en GitLab</h2></div></div><p>GitLab es donde guardamos el código del equipo y trabajamos juntos. Crea tu cuenta usando tu <strong>correo institucional</strong> y completa la verificación de correo que te solicite.</p><a class="button primary" href="https://gitlab.com/users/sign_up" target="_blank" rel="noopener noreferrer">Crear mi cuenta en GitLab</a></section>
+      <section id="acceso" class="tool-section"><h2>Solicita acceso a Botbusters</h2><p>Comparte el correo con el que te registraste en el <strong>grupo de WhatsApp del equipo</strong>. Tu mentor lo usará para agregarte al grupo de GitLab.</p><div class="message-example"><span class="eyebrow">PUEDES ENVIAR ALGO ASÍ</span><p>“Ya creé mi cuenta de GitLab. Mi correo institucional es [tu correo]. ”</p></div><p>Espera a que te confirmen el acceso y acepta la invitación si te llega por correo.</p></section>
+      <section id="repositorio" class="tool-section"><span class="tool-type">DEL REPOSITORIO A TU COMPUTADORA</span><h2>Clona el proyecto</h2><p>Inicia sesión en GitLab y sigue esta ruta. El proyecto que buscamos se llama <strong>FTC-Botbusters 2026-2027</strong>.</p><div class="repo-path"><span>Home</span><b>/</b><span>Groups</span><b>/</b><span>Botbusters</span><b>/</b><span>FTC</span><b>/</b><strong>FTC-Botbusters 2026-2027</strong></div>
+      <div class="walkthrough"><div class="walkthrough-top"><span class="eyebrow">GUÍA VISUAL</span><span id="step-counter">1 / 8</span></div><div class="step-tabs" aria-label="Pasos para clonar" id="step-tabs"></div><div class="walkthrough-text"><h3 id="step-title"></h3><p id="step-description"></p></div><button class="screenshot-button" id="expand-image" aria-label="Ampliar captura"><img id="step-image" src="assets/step-1.png" alt=""><span class="expand-hint"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>Ampliar captura</span></button><div class="walkthrough-controls"><button class="button secondary" id="prev-step">Anterior</button><span id="step-kind">GitLab</span><button class="button secondary" id="next-step">Siguiente paso</button></div></div>
+      <h3 class="repo-url-title">El enlace del repositorio</h3><p>Copia la dirección de <strong>Code → Clone with HTTPS</strong>. Es la misma que pegarás en el campo <strong>URL</strong> de Android Studio.</p><div class="code-block repo-code"><code id="repo-url">https://gitlab.com/botbusters/ftc/ftc-botbusters-2026-2027.git</code><button class="copy-button" data-copy="repo-url">Copiar</button></div><div class="note"><span class="note-icon">i</span><div><strong>El repositorio es privado.</strong><p>Necesitas tener acceso al grupo antes de clonarlo. Si Android Studio solicita autenticación o instalar Git, completa el proceso en pantalla; si no puedes continuar, pide ayuda a tu mentor.</p></div></div><p>Al abrir el proyecto clonado, espera las descargas y la sincronización inicial de Gradle.</p></section>
+<section id="rama" class="tool-section"><h2>Trabaja en monterreyRegional</h2><p>Después de clonar y abrir el proyecto, cambia a <strong>monterreyRegional</strong>. Esa es la rama donde haremos las prácticas.</p><ol class="instructions"><li>Abre el selector de ramas de Git en la barra superior de Android Studio.</li><li>Busca <code>monterreyRegional</code> y selecciona <strong>Checkout</strong>. Si solo aparece bajo <code>origin</code>, haz checkout de esa rama remota para crear su copia local de seguimiento.</li><li>Comprueba que la barra superior diga <code>monterreyRegional</code> antes de empezar a editar.</li></ol><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/branch-monterrey-regional.png" data-caption="Selector de ramas de Android Studio con monterreyRegional" aria-label="Ampliar: Selector de ramas de Android Studio con monterreyRegional"><img src="assets/branch-monterrey-regional.png" alt="Selector de ramas de Android Studio con monterreyRegional" loading="lazy"><span>Ampliar imagen</span></button><figcaption>La rama de trabajo debe aparecer arriba, junto al nombre del proyecto.</figcaption></figure><p>Si no aparece, usa Git → Fetch y vuelve a buscarla. Si sigue sin estar disponible, confirma el acceso con tu mentor. <a class="inline-source" href="https://www.jetbrains.com/help/idea/manage-branches.html" target="_blank" rel="noopener noreferrer">Cómo cambiar de rama</a>.</p></section>
+      <nav class="page-navigation" aria-label="Navegación entre guías"><a class="next-page" href="#instalacion"><span><span class="next-label">ANTERIOR</span><strong>Instalación</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></span></a><a class="next-page" href="#codigo"><span><span class="next-label">SIGUIENTE</span><strong>Conoce el código</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></a></nav><footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer>
+    </article>
+    <article id="code-page" class="doc-page" hidden>
+      <div class="breadcrumb">El código <span>/</span> <strong>Conoce el código</strong></div>
+      <div class="article-heading"><h1>Conoce el código.</h1><p class="lead">Ya tienes el proyecto abierto. Ahora vamos a ubicar los archivos y entender cómo una instrucción termina moviendo el robot.</p></div>
+
+      <section id="donde-corre" class="tool-section first-section">
+        <h2>¿Dónde se ejecuta el programa?</h2>
+        <p>Escribimos el código en <strong>Java</strong>, dentro de Android Studio. El programa se ejecuta en el <strong>Robot Controller</strong>, que puede ser un Control Hub o un teléfono Android del robot.</p>
+        <p>Desde <strong>Driver Station</strong>, los conductores seleccionan e inician un <strong>OpMode</strong>: el programa que el robot va a ejecutar en ese momento.</p>
+        <dl class="concept-list"><div><dt>TeleOp</dt><dd>El conductor maneja el robot con el control.</dd></div><div><dt>Autonomous</dt><dd>El robot sigue acciones que programamos de antemano.</dd></div></dl>
+      </section>
+
+      <section id="mapa-proyecto" class="tool-section">
+        <h2>Tu punto de partida: TeamCode</h2>
+        <p>El trabajo diario del equipo está en <code>TeamCode</code>. En Android Studio, abre esta ruta para encontrar nuestras clases:</p>
+        <div class="code-block path-block"><code>TeamCode/src/main/java/org/firstinspires/ftc/teamcode/</code></div>
+        <div class="table-wrap"><table class="guide-table"><caption>Las carpetas que vas a consultar primero</caption><thead><tr><th scope="col">Carpeta</th><th scope="col">Qué encontrarás</th></tr></thead><tbody>
+          <tr><th scope="row"><code>robot/</code></th><td>El robot y la infraestructura común de los OpModes.</td></tr>
+          <tr><th scope="row"><code>robotOpModes/Comp/</code></th><td>Los TeleOps, autónomos y pruebas que se seleccionan para ejecutar.</td></tr>
+          <tr><th scope="row"><code>mechanisms/</code></th><td>El hardware y el comportamiento del chasis y los mecanismos.</td></tr>
+          <tr><th scope="row"><code>commands/</code></th><td>Comandos y adaptadores para organizar acciones.</td></tr>
+          <tr><th scope="row"><code>pedroPathing/</code></th><td>Configuración del movimiento, rutas y calibradores.</td></tr>
+        </tbody></table></div>
+        <p><code>FtcRobotController</code> contiene la infraestructura Android y ejemplos del SDK. Para empezar a entender nuestro robot, concéntrate en <code>TeamCode</code>.</p>
+      </section>
+
+      <section id="piezas-codigo" class="tool-section">
+        <h2>Las piezas principales</h2>
+        <p>Cada parte tiene una responsabilidad. Identificarla te ayuda a saber dónde buscar un comportamiento.</p>
+        <dl class="file-roles">
+          <div><dt><code>IntakeTeleOp.java</code></dt><dd>Lo crearás en la práctica: asigna el botón del intake y aparece como <strong>Prueba Intake</strong> en Driver Station.</dd></div>
+          <div><dt><code>RobotOpMode.java</code></dt><dd>Es la base compartida. Crea el robot, actualiza los botones, ejecuta los comandos y publica telemetría.</dd></div>
+          <div><dt><code>Robot.java</code></dt><dd>Reúne y construye los mecanismos que usarán los OpModes.</dd></div>
+          <div><dt>Mecanismos</dt><dd>Clases como <code>Intake</code>, <code>Indexer</code> y <code>EctoMecanum</code> conocen su hardware y aplican su comportamiento.</dd></div>
+        </dl>
+        <p>Un <strong>comando</strong> describe una acción. El <strong>scheduler</strong> es quien la procesa. En este proyecto, crear un comando y programarlo para ejecutar son pasos distintos: <code>robot.intake.on()</code> lo crea; <code>robot.intake.on().schedule()</code> solicita su ejecución.</p>
+        <div class="inline-tip"><strong>Base de la práctica</strong><p>El mentor dejará el chasis y la infraestructura común; tú reconstruirás los mecanismos y su registro. Las prácticas reconstruyen Intake e Indexer y los agregan a Robot y RobotOpMode.</p></div>
+        <dl class="concept-list"><div><dt>hardwareMap</dt><dd>Conecta los nombres del código con los dispositivos configurados en FTC. Por ejemplo, <code>intake</code> debe coincidir con el nombre de ese motor.</dd></div><div><dt>Telemetría</dt><dd>Datos que el programa muestra en Driver Station o Dashboard para entender qué está pasando.</dd></div></dl>
+        <details class="details"><summary>Java que aparece en los ejemplos</summary><div class="details-body"><div class="table-wrap"><table class="guide-table"><thead><tr><th>Sintaxis</th><th>Qué significa aquí</th></tr></thead><tbody><tr><th>Clase, campo y constructor</th><td>La clase define el tipo; el campo guarda datos o referencias; el constructor prepara un objeto al usar <code>new</code>.</td></tr><tr><th><code>public / private / protected</code></th><td>Public permite usar el miembro desde otras clases; private lo limita a su clase; protected permite usarlo desde las clases hijas.</td></tr><tr><th><code>final / static</code></th><td>Final impide reasignar el campo; static comparte el campo entre las instancias de la clase. Final no impide llamar métodos del motor.</td></tr><tr><th><code>extends / super</code></th><td>Extends hereda de una base. <code>super(robot)</code> llama su constructor; <code>super.init()</code> ejecuta su inicialización.</td></tr><tr><th><code>this / "intake"</code></th><td>This es el objeto actual. El texto entre comillas es un nombre de dispositivo, distinto de una variable Java.</td></tr><tr><th><code>() -&gt; acción</code></th><td>Define código que se ejecutará después. <code>lector::isPressed</code> entrega un método para consultar el botón durante la ejecución.</td></tr><tr><th><code>enum Mode</code></th><td>Limita el estado a opciones con nombre, como ON, OFF y REVERSE.</td></tr></tbody></table></div></div></details>
+<details class="details"><summary>Las bibliotecas que verás en el proyecto</summary><div class="details-body"><dl class="library-list"><div><dt>Pedro Pathing</dt><dd>Movimiento, localización y seguimiento de rutas.</dd></div><div><dt>Ivy</dt><dd>Organización y ejecución de comandos.</dd></div><div><dt>FTCLib</dt><dd>Lectura del control y herramientas auxiliares.</dd></div><div><dt>FTC Dashboard</dt><dd>Visualización de datos y herramientas de diagnóstico.</dd></div></dl></div></details>
+      </section>
+
+      <section id="robot-mecanismos" class="tool-section"><h2>Robot: reúne los mecanismos</h2><p><code>Robot.java</code> guarda hardwareMap, telemetría y las instancias compartidas. La base lo crea con <code>new Robot(this)</code>; su constructor recibe el OpMode y prepara <code>MultipleTelemetry</code> para Driver Station y Dashboard.</p><p>Para agregar un mecanismo, importa su clase, declara un campo y construye la instancia en el constructor, después de preparar hardwareMap y telemetría. En <code>new Intake(this, "intake")</code>, this es Robot y el texto identifica el motor en FTC. El TeleOp y el periódico usan la misma referencia, <code>robot.intake</code>. La práctica muestra <a class="inline-source" href="#intake/intake-robot">los tres cambios completos</a>.</p><p>Construir el objeto no programa sus actualizaciones. Además, cualquier dispositivo requerido por Robot puede causar un error en INIT aunque el modo todavía no use ese mecanismo.</p></section>
+
+      <section id="robotopmode" class="tool-section"><h2>RobotOpMode: mantiene todo funcionando</h2><p>Los modos que escriben <code>extends RobotOpMode</code> heredan <code>robot</code> y el procesamiento común de botones, scheduler y telemetría. El helper <code>button(...)</code> crea un <code>EctoButton</code> y lo registra para que la base lo actualice.</p><p>Conserva <code>super.init()</code> antes de usar Robot y <code>super.loop()</code> para mantener ese procesamiento. En el TeleOp de conducción, <code>robot.mecanum.drive(gamepad)</code> va antes de <code>super.loop()</code>. El ciclo siguiente resume qué hace la base en cada etapa; la práctica incluye <a class="inline-source" href="#intake/intake-opmode">su código completo</a>.</p></section>
+
+      <section id="ciclo-opmode" class="tool-section">
+        <h2>El ciclo de un OpMode</h2>
+        <p>El robot repite trabajo durante la ejecución. Estas son las etapas que conviene reconocer al leer un TeleOp.</p>
+        <dl class="lifecycle">
+          <div><dt>INIT <code>init()</code></dt><dd>Limpia botones y scheduler, construye Robot y programa una vez los periódicos registrados. Mientras espera START, <code>init_loop()</code> procesa el scheduler.</dd></div>
+          <div><dt>START <code>start()</code></dt><dd>Inicia las acciones del modo. En Prueba Intake, aquí se programa la recolección automática.</dd></div>
+          <div><dt>LOOP <code>loop()</code></dt><dd>Se repite mientras el modo está activo: el TeleOp lee el manejo y la base actualiza EctoButton, ejecuta el scheduler y publica <code>robot.telemetry.update()</code>.</dd></div>
+          <div><dt>STOP</dt><dd>Termina la ejecución del modo desde FTC.</dd></div>
+        </dl>
+        <p><code>periodic()</code> crea el comando que actualiza un mecanismo repetidamente. Se procesa en el scheduler; no es un hilo separado. Una espera bloqueante dentro de ese trabajo puede detener las demás actualizaciones.</p>
+      </section>
+
+      <section id="integrar-mecanismo" class="tool-section"><h2>Cómo se conecta un mecanismo al proyecto</h2><div class="table-wrap"><table class="guide-table"><thead><tr><th>Lugar</th><th>Responsabilidad</th></tr></thead><tbody><tr><th>Clase del mecanismo</th><td>Define hardware, estados, comandos y la aplicación de salidas.</td></tr><tr><th>Robot</th><td>Declara y construye una instancia compartida.</td></tr><tr><th>RobotOpMode.init()</th><td>Programa su periódico si necesita actualizaciones continuas.</td></tr><tr><th>TeleOp o autónomo</th><td>Programa acciones desde botones o secuencias.</td></tr></tbody></table></div><p>En intake e indexer, los comandos cambian estados y el periódico escribe potencia. Los comandos declaran recursos para resolver acciones que compiten por el mismo motor. Define estado inicial, final y comportamiento al interrumpirse.</p><p>Heredar de <code>EctoMechanism</code> no registra el objeto en Robot ni programa su periódico.</p><details class="details"><summary>Cómo identificar una conexión faltante</summary><div class="details-body"><p>Si existe la clase, revisa su construcción en Robot; si existe el objeto, su periódico; si se actualiza pero sigue apagado, sus comandos; y si falla un botón, su registro y <code>super.loop()</code>.</p></div></details><p>Las prácticas de <a class="inline-source" href="#intake">Intake</a> e <a class="inline-source" href="#indexer">Indexer</a> desarrollan estas conexiones.</p></section>
+
+      <section id="boton-motor" class="tool-section">
+        <h2>Del botón al motor</h2>
+        <p>Piensa en esta cadena cuando quieras entender qué hace un control:</p>
+        <ol class="code-flow" aria-label="Recorrido de una orden"><li><strong>Control</strong><span>El conductor presiona.</span></li><li><strong>OpMode</strong><span>Relaciona el botón con una acción.</span></li><li><strong>Comando</strong><span>Solicita el comportamiento.</span></li><li><strong>Mecanismo</strong><span>Aplica la salida al hardware.</span></li></ol>
+        <h3>Ejemplo: Y en Prueba Intake</h3>
+        <ol class="instructions"><li><code>EctoButton</code> detecta que se presionó Y.</li><li>Se programa <code>outtake</code>, que pone el intake en <code>REVERSE</code>.</li><li>El periódico de <code>Intake</code> convierte ese estado en potencia para el motor.</li><li>Al soltar Y, el comando termina y el intake vuelve a <code>ON</code>.</li></ol>
+        <p>La idea es separar <strong>qué queremos que haga</strong> el mecanismo de <strong>cómo se aplica al motor</strong>. Estados como <code>ON</code>, <code>OFF</code> y <code>REVERSE</code> expresan esa intención.</p>
+      </section>
+
+      <section id="por-donde-empezar" class="tool-section">
+        <h2>Por dónde empezar a leer</h2>
+        <p>Después de completar Intake, sigue el botón Y recorriendo estos archivos:</p>
+        <ol class="instructions reading-order"><li><code>robotOpModes/Comp/IntakeTeleOp.java</code><span>Ubica Y y el comando que programa.</span></li><li><code>robot/RobotOpMode.java</code><span>Encuentra dónde se procesan los botones y el scheduler.</span></li><li><code>robot/Robot.java</code><span>Revisa qué mecanismos se construyen.</span></li><li><code>mechanisms/Intake/Intake.java</code><span>Sigue el estado hasta la potencia del motor.</span></li></ol>
+
+      </section>
+<section id="probar-cambios" class="tool-section"><h2>Compila, instala y prueba</h2><p>Completa la clase, su construcción en Robot y su periódico en RobotOpMode antes de probar el TeleOp. Los archivos completos muestran el estado de cada lección: conserva lo que ya agregaste al avanzar a la siguiente.</p><ol class="instructions"><li><strong>Compila.</strong> Espera la sincronización de Gradle y usa Build → Make Project, o la acción de compilar de tu versión. Corrige el primer error indicado. Las referencias a mecanismos que borraste también deben adaptarse en los OpModes; <code>@Disabled</code> no evita que Java los compile.</li><li><strong>Revisa el hardware.</strong> En la configuración FTC activa, comprueba tipo, puerto y nombre de cada dispositivo que construye Robot. No basta con renombrar la variable Java.</li><li><strong>Instala en el Robot Controller.</strong> Conecta el Control Hub encendido por USB-C, selecciona <strong>TeamCode</strong> y el dispositivo físico correcto en Android Studio y presiona Run. Espera la instalación; elegir un emulador no carga el código al robot.</li><li><strong>Selecciona el modo.</strong> En Driver Station, conectada al Robot Controller, abre TeleOp y elige el nombre de <code>@TeleOp</code>: Prueba Intake, Prueba Indexer o Practica Mecanismos.</li><li><strong>Prueba una acción.</strong> Prepara el robot con el mentor, deja libres ruedas y rodillos, presiona INIT y después START. Compara el botón y su liberación con la tabla de la lección; termina con STOP.</li></ol><p>Si no aparece el modo, revisa la instalación en ese Robot Controller, su anotación <code>@TeleOp</code>, la ausencia de <code>@Disabled</code> y un nombre de modo único. <a class="inline-source" href="https://ftc-docs.firstinspires.org/en/latest/programming_resources/tutorial_specific/android_studio/creating_op_modes/Creating-and-Running-an-Op-Mode-(Android-Studio).html#building-and-installing-your-opmode" target="_blank" rel="noopener noreferrer">Instalar y ejecutar un OpMode · FTC Docs</a>.</p></section>
+      <nav class="page-navigation" aria-label="Navegación entre guías"><a class="next-page" href="#setup"><span><span class="next-label">ANTERIOR</span><strong>Setup</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></span></a><a class="next-page" href="#chasis"><span><span class="next-label">SIGUIENTE</span><strong>Chasis</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></a></nav>
+      <footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer>
+    </article>
+    <article id="chassis-page" class="doc-page" hidden>
+      <div class="breadcrumb">Mecanismos <span>/</span> <strong>Chasis</strong></div>
+      <div class="article-heading"><h1>Chasis.</h1><p class="lead">El chasis ya está programado. Usamos la misma base de movimiento para TeleOp y autónomo; para que funcione bien en nuestro robot, hay que revisar su configuración y tunearlo.</p></div>
+
+      <div class="mechanism-gallery chassis-gallery"><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/chassis-reference.png" data-caption="Chasis mecanum de referencia visto desde arriba" aria-label="Ampliar: Chasis mecanum de referencia visto desde arriba"><img src="assets/chassis-reference.png" alt="Chasis mecanum de referencia visto desde arriba" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Chasis mecanum de referencia.</figcaption></figure><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/robot-chassis-cad.png" data-caption="CAD del robot compartido por el mentor" aria-label="Ampliar: CAD del robot compartido por el mentor"><img src="assets/robot-chassis-cad.png" alt="CAD del robot compartido por el mentor" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Vista del montaje compartido por el mentor.</figcaption></figure></div>
+      <section id="chasis-pedro" class="tool-section first-section">
+        <h2>La base viene de Pedro Pathing</h2>
+        <p>Nuestra clase <code>EctoMecanum</code> integra el chasis con <strong>Pedro Pathing 3</strong>. El equipo organiza su uso dentro de <code>Robot</code> y <code>RobotOpMode</code>; Pedro aporta el drivetrain, la localización y el seguimiento de rutas.</p>
+        <p>El centro es el <strong>Follower</strong>. Se crea con <code>Constants.create(hardwareMap)</code> y conecta tres piezas:</p>
+        <dl class="file-roles"><div><dt>PinpointLocalizer</dt><dd>Estima la pose del robot —posición X/Y y orientación— usando el Pinpoint y sus pods de odometría.</dd></div><div><dt>Mecanum</dt><dd>Aplica las salidas a los cuatro motores del chasis.</dd></div><div><dt>Foresight</dt><dd>Calcula las correcciones para seguir una trayectoria o mantener la pose cuando se solicita ese comportamiento.</dd></div></dl>
+        <p>El conductor y las trayectorias dan órdenes al mismo <code>robot.mecanum</code>.</p>
+        <div class="inline-tip"><strong>Programado no significa calibrado para cualquier robot.</strong><p>Los nombres de hardware, las direcciones, el montaje de los pods y la respuesta al acelerar y frenar deben corresponder a nuestro montaje. Copiar las constantes de otro robot no sustituye el tuning.</p></div>
+        <a class="text-link no-margin" href="https://pedropathing.com/docs/pathing/guide/setting-up-auto" target="_blank" rel="noopener noreferrer">Pedro Pathing: el Follower y su configuración</a>
+      </section>
+
+      <section id="chasis-odometria" class="tool-section"><h2>Odometría: dos dead wheels y Pinpoint</h2><p>Usamos <strong>dos dead wheels</strong>: ruedas sin motor con encoders, montadas perpendicularmente para medir avance y movimiento lateral. El <strong>goBILDA Pinpoint</strong> combina sus lecturas con su IMU para estimar posición y orientación; <code>PinpointLocalizer</code> entrega esa pose al follower para autónomo y manejo field-centric. <a class="inline-source" href="https://www.gobilda.com/content/user_manuals/3110-0002-0001%20User%20Guide.pdf" target="_blank" rel="noopener noreferrer">Funcionamiento de Pinpoint</a>.</p><ol class="code-flow odometry-flow" aria-label="Cadena de localización"><li><strong>Dos pods</strong><span>Miden avance y desplazamiento lateral.</span></li><li><strong>Pinpoint</strong><span>Combina encoders e IMU.</span></li><li><strong>Localizer</strong><span>Entrega la pose estimada a Pedro.</span></li><li><strong>Follower</strong><span>Usa la pose para manejo y rutas.</span></li></ol><p>Para que mida bien, revisa contacto y giro libre de las ruedas, conexiones de los pods, direcciones, tipo de pod y offsets reales del montaje en <code>Constants.localizerConfig</code>. Un pod que pierde contacto o un offset incorrecto distorsiona la pose. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/localization/pinpoint" target="_blank" rel="noopener noreferrer">Tuning de Pinpoint</a>.</p></section>
+      <section id="chasis-archivos" class="tool-section">
+        <h2>Qué archivos participan</h2>
+        <p>Estas rutas parten de <code>TeamCode/src/main/java/org/firstinspires/ftc/teamcode/</code>.</p>
+        <div class="table-wrap"><table class="guide-table chassis-files"><caption>El mapa del chasis en nuestro proyecto</caption><thead><tr><th scope="col">Archivo o carpeta</th><th scope="col">Responsabilidad</th></tr></thead><tbody>
+          <tr><th scope="row"><code>mechanisms/EctoMecanum/EctoMecanum.java</code></th><td>Construye el follower, maneja el TeleOp, expone el seguimiento de rutas y actualiza la pose.</td></tr>
+          <tr><th scope="row"><code>pedroPathing/Constants.java</code></th><td>Configuración activa de motores, Pinpoint y Foresight. Su método <code>create</code> conecta esas tres configuraciones.</td></tr>
+          <tr><th scope="row"><code>robot/Robot.java</code></th><td>Construye y conserva la instancia del chasis en <code>mecanum</code>.</td></tr>
+          <tr><th scope="row"><code>robot/RobotOpMode.java</code></th><td>Crea Robot y programa el periódico del chasis en el scheduler.</td></tr>
+          <tr><th scope="row"><code>robotOpModes/Comp/RedCompTeleOp.java</code><br><code>robotOpModes/Comp/BlueCompTeleOp.java</code></th><td>Definen la alianza, la pose inicial y la llamada al manejo.</td></tr>
+          <tr><th scope="row"><code>pedroPathing/Paths/</code></th><td>Define la geometría y orientación de las trayectorias.</td></tr>
+          <tr><th scope="row"><code>robotOpModes/Comp/Auto/</code></th><td>Selecciona y programa las rutas que ejecuta un autónomo.</td></tr>
+          <tr><th scope="row"><code>pedroPathing/Tuning.java</code><br><code>pedroPathing/procedures/</code></th><td>Registra los procedimientos de tuning y contiene sus herramientas.</td></tr>
+        </tbody></table></div>
+        <p><code>commands/Mecanum/FollowCommand.java</code> añade el helper de seguimiento con condiciones de llegada. <code>mechanisms/EctoMecanum/OpModeStorage.java</code> guarda una pose en memoria para compartirla entre modos.</p>
+        <div class="inline-tip"><strong>Revisa el archivo que realmente usa el chasis.</strong><p>Hay configuraciones heredadas, como <code>RobotConfig</code> y <code>mechanisms/Mecanum/MecanumConfig</code>. Cambiarlas no reemplaza los valores de <code>pedroPathing.Constants</code> que consume el chasis activo.</p></div>
+      </section>
+
+      <section id="chasis-opmode" class="tool-section">
+        <h2>Cómo llega al OpMode</h2>
+        <ol class="integration-steps"><li><h3>El OpMode llama a super.init()</h3><p><code>RobotOpMode</code> limpia botones y scheduler, y construye <code>Robot(this)</code>.</p></li><li><h3>Robot construye EctoMecanum</h3><p>El chasis queda disponible como <code>robot.mecanum</code>. Su constructor recibe <code>Robot</code> y obtiene el follower mediante <code>Constants.create(robot.hardwareMap)</code>.</p></li><li><h3>La base programa su periodic()</h3><p>Ese comando actualiza <code>follower.update()</code>, conserva la pose y publica datos y el dibujo de diagnóstico.</p></li><li><h3>El modo da una orden</h3><p>El TeleOp llama a <code>drive(gamepad)</code>. El autónomo programa un comando de <code>followPath(path)</code>.</p></li><li><h3>super.loop() mantiene el procesamiento</h3><p>El scheduler ejecuta los comandos y las actualizaciones periódicas. La base también procesa el scheduler mientras espera START, en <code>init_loop()</code>.</p></li></ol>
+        <p><code>EctoMecanum</code> no hereda de <code>EctoMechanism</code>: expone su propio <code>periodic()</code>, que la base programa igualmente. En esta arquitectura, ese periódico ya mantiene el follower actualizado. Conserva esa integración al editar un OpMode; no crees un segundo follower ni añadas otra actualización del mismo follower sin revisar el flujo.</p>
+        <details class="details"><summary>Métodos útiles de EctoMecanum</summary><div class="details-body"><div class="table-wrap"><table class="guide-table"><thead><tr><th scope="col">Método</th><th scope="col">Uso</th></tr></thead><tbody><tr><th scope="row"><code>drive(gamepad)</code></th><td>Lee los controles y solicita manejo manual.</td></tr><tr><th scope="row"><code>followPath(path)</code></th><td>Crea un comando para seguir una ruta; todavía hay que programarlo.</td></tr><tr><th scope="row"><code>setStartingPose(pose)</code></th><td>Establece directamente la pose inicial del localizador.</td></tr><tr><th scope="row"><code>setPose(pose)</code></th><td>Delega el cambio de pose en el follower.</td></tr><tr><th scope="row"><code>getPose()</code></th><td>Consulta la pose estimada.</td></tr><tr><th scope="row"><code>resetHeading(h)</code></th><td>Reasigna la orientación conservando X/Y.</td></tr><tr><th scope="row"><code>resetLocalizer()</code></th><td>Reinicia el localizador.</td></tr><tr><th scope="row"><code>getFollower()</code></th><td>Expone el follower a otras partes del programa.</td></tr><tr><th scope="row"><code>usePreviousStartingPose()</code></th><td>Recupera la pose guardada en OpModeStorage.</td></tr></tbody></table></div></div></details>
+      </section>
+
+      <section id="chasis-teleop" class="tool-section">
+        <h2>El chasis en TeleOp</h2>
+        <p>En <code>RedCompTeleOp.loop()</code> primero se llama al manejo y después a la base:</p>
+        <pre class="java-example"><code>robot.mecanum.drive(gamepad);
+super.loop();</code></pre>
+        <p>Dentro de <code>EctoMecanum.drive</code>, el manejo es <strong>field-centric</strong>: la traslación se transforma usando la orientación estimada del robot y el offset de alianza.</p>
+        <pre class="java-example"><code>DrivePowers powers = ManualDrive.fieldCentric(
+    gamepad.getRightY(),
+    gamepad.getRightX(),
+    -gamepad.getLeftX(),
+    follower.pose().heading() + offset
+);
+ManualDrive.driveOrHold(follower, powers);</code></pre>
+        <div class="table-wrap"><table class="guide-table"><caption>Asignación de controles en nuestro código</caption><thead><tr><th scope="col">Entrada</th><th scope="col">Uso</th></tr></thead><tbody><tr><th scope="row">Stick derecho Y</th><td>Primer componente de traslación: <code>getRightY()</code>.</td></tr><tr><th scope="row">Stick derecho X</th><td>Segundo componente de traslación: <code>getRightX()</code>.</td></tr><tr><th scope="row">Stick izquierdo X</th><td>Rotación: <code>-getLeftX()</code>.</td></tr></tbody></table></div>
+        <p>Son lecturas de <code>GamepadEx</code> de FTCLib. Si cambias sticks o usas <code>gamepad1</code> del SDK, revisa sus ejes y signos.</p>
+        <p><code>ManualDrive.driveOrHold</code> delega en Pedro el manejo y la retención de posición al dejar de dar entrada. Un problema de localización o tuning puede afectar también ese comportamiento. <a class="inline-source" href="https://pedropathing.com/docs/pathing/guide/teleop-usage" target="_blank" rel="noopener noreferrer">Uso de Pedro en TeleOp</a>.</p>
+        <h3>Alianza, pose y unidades</h3>
+        <p>En nuestro chasis, <code>setAlliance(RED)</code> usa un offset de <code>π</code> radianes; <code>BLUE</code> usa <code>0</code>. Ese offset orienta el manejo para el conductor; no sustituye configurar correctamente la pose física inicial.</p>
+        <p>La revisión compartida inicia el rojo en <code>(8, 8, 0°)</code> y el azul en <code>(135.5, 85, 180°)</code>. Deben corresponder a cómo colocamos el robot en el campo; no son posiciones universales.</p>
+        <div class="table-wrap"><table class="guide-table"><thead><tr><th scope="col">Dato</th><th scope="col">Unidad</th></tr></thead><tbody><tr><th scope="row">X/Y de Pedro</th><td>Pulgadas.</td></tr><tr><th scope="row"><code>Pose.heading()</code> y el constructor directo usado aquí</th><td>Radianes. Para pasar 90°, usa una conversión como <code>Math.toRadians(90)</code>.</td></tr><tr><th scope="row">Heading publicado por nuestro periódico</th><td>Grados; no lo confundas con la unidad interna.</td></tr></tbody></table></div>
+        <p>Comprueba el import: <code>com.pedropathing.math.Pose</code> es distinto de los tipos de pose de Road Runner y FTCLib.</p>
+        <details class="details"><summary>Pasar la pose del autónomo al TeleOp</summary><div class="details-body"><p>En el TeleOp rojo, <code>usePreviousStartingPose()</code> está comentado y se establece una pose fija. No se está recuperando automáticamente el final del autónomo.</p><p><code>OpModeStorage.autoEndPose</code> es memoria estática del proceso. Además, nuestro periódico la sobrescribe también durante INIT y TeleOp. Para transferir la pose correctamente hay que revisar cuándo se guarda y cuándo se recupera, antes de que INIT la reemplace; no basta con confiar en el nombre de la variable.</p></div></details>
+      </section>
+
+      <section id="chasis-autonomo" class="tool-section">
+        <h2>El mismo chasis en autónomo</h2>
+        <p>Las clases de <code>pedroPathing/Paths/</code> describen por dónde pasar y cómo orientar el robot. El OpMode de <code>robotOpModes/Comp/Auto/</code> decide qué rutas ejecutar y en qué orden.</p>
+        <ol class="instructions"><li>En <code>init()</code>, conserva <code>super.init()</code> y establece alianza y pose inicial.</li><li>Obtén la ruta de su clase de paths.</li><li>En <code>start()</code>, programa el comando de seguimiento.</li><li>Mantén el scheduler y el periódico activos mediante la base del OpMode.</li></ol>
+        <p>En <code>start()</code> de un autónomo con RobotOpMode, encadena las rutas del objeto <code>paths</code> preparado por ese modo. Este fragmento propone una secuencia para <code>RedGardenTopPark</code>; el ZIP las programa por separado:</p>
+        <pre class="java-example"><code>schedule(
+    robot.mecanum.followPath(paths.intakeGarden())
+        .then(robot.mecanum.followPath(paths.intakeTopFlower()))
+        .then(robot.mecanum.followPath(paths.parkFromTop()))
+);</code></pre>
+        <p><code>.then(...)</code> inicia cada tramo al terminar el anterior. Varias llamadas independientes a <code>schedule(...)</code> compiten por el mismo follower; no forman una secuencia.</p>
+        <p><code>line(...)</code> crea un tramo recto; <code>curve(...)</code>, una curva con puntos de control. La interpolación define la orientación durante el recorrido. Un valor fraccional de una interpolación por tramos no representa necesariamente segundos.</p>
+        <p>Una ruta llamada <code>intakeGarden()</code> solo describe movimiento: no enciende el intake. Las acciones de otros mecanismos se programan explícitamente. <a class="inline-source" href="https://pedropathing.com/docs/pathing/guide/setting-up-auto" target="_blank" rel="noopener noreferrer">Guía de autónomos de Pedro</a>.</p>
+      </section>
+
+      <section id="chasis-constants" class="tool-section">
+        <h2>Constants: qué debe estar configurado</h2>
+        <p>Revisa <code>pedroPathing/Constants.java</code>. Debe contener la configuración de <strong>drivetrain</strong>, <strong>localizer</strong> y <strong>Foresight</strong>, y usarlas al crear el follower. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/constants" target="_blank" rel="noopener noreferrer">Referencia oficial de Constants</a>.</p>
+        <h3>drivetrainConfig: los cuatro motores</h3>
+        <div class="table-wrap"><table class="guide-table"><caption>Valores descritos en el código del equipo</caption><thead><tr><th scope="col">Posición</th><th scope="col">Nombre FTC</th><th scope="col">Dirección declarada</th></tr></thead><tbody><tr><th scope="row">Delantero izquierdo</th><td><code>lf</code></td><td>FORWARD</td></tr><tr><th scope="row">Delantero derecho</th><td><code>rf</code></td><td>REVERSE</td></tr><tr><th scope="row">Trasero izquierdo</th><td><code>lb</code></td><td>FORWARD</td></tr><tr><th scope="row">Trasero derecho</th><td><code>rb</code></td><td>FORWARD</td></tr></tbody></table></div>
+        <p>Cada nombre debe coincidir con la configuración FTC y con la rueda indicada. Verifica las direcciones en el montaje real.</p>
+        <h3>localizerConfig: Pinpoint y odometría</h3>
+        <p>Comprueba el nombre <code>pinpoint</code>, el tipo de pod, las direcciones de los ejes y los offsets de montaje. En el ZIP compartido se usan pods <code>goBILDA_4_BAR_POD</code>, ambos ejes invertidos y offsets aproximados de <code>X = 3.7775</code> y <code>Y = 2.0972</code> pulgadas.</p>
+        <p>El archivo fija <code>globalDistanceUnit</code> y <code>offsetUnits</code> en <code>DistanceUnit.INCH</code>. Esos offsets describen dónde están montados los pods respecto al centro de rotación. No son la posición inicial del robot en el campo. Si cambia el montaje, vuelve a medir o tunear. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/localization/pinpoint" target="_blank" rel="noopener noreferrer">Configuración y tuning de Pinpoint</a>.</p>
+        <h3>foresightConfig: respuesta y seguimiento</h3>
+        <div class="table-wrap"><table class="guide-table"><caption>Grupos que debes conservar al integrar el tuning</caption><thead><tr><th scope="col">Grupo</th><th scope="col">Qué configura</th></tr></thead><tbody><tr><th scope="row">Control de traslación y heading</th><td>Controladores forward/lateral primarios y secundarios, transición entre ellos y corrección angular.</td></tr><tr><th scope="row">Feedforward</th><td>Respuesta de avance libre y frenado: <code>coast</code> y <code>brake</code>.</td></tr><tr><th scope="row">Modelos de frenado</th><td>Coeficientes de heading, lineales y cuadráticos.</td></tr><tr><th scope="row">Velocidad y desaceleración</th><td>Máximos alcanzables y desaceleración natural, tanto frontal como lateral.</td></tr><tr><th scope="row">Restricciones y opciones</th><td>Revisa los ajustes globales y cualquier modificación que una ruta aplique localmente.</td></tr></tbody></table></div>
+        <p>El archivo del equipo ya tiene valores. No los borres para pegar solo una ganancia o una plantilla parcial: integra el resultado completo correspondiente al robot y verifica que no se pierdan campos del resto de la configuración.</p>
+        <h3>create(): conectar las configuraciones</h3>
+        <p>La cadena activa debe construir <code>PinpointLocalizer</code> con <code>localizerConfig</code>, <code>Mecanum</code> con <code>drivetrainConfig</code> y <code>Foresight</code> con <code>foresightConfig</code>. Tener constantes escritas no sirve si <code>create()</code> está usando otras.</p>
+        <p>Si cambias de localizador o drivetrain, actualiza también esa construcción y los procedimientos de <code>Tuning.java</code>; cambiar solo los números del archivo no cambia el tipo de hardware.</p>
+      </section>
+
+      <section id="chasis-tuning" class="tool-section">
+        <h2>Cómo tunearlo</h2>
+        <p>Tunear es medir y ajustar cómo responde <strong>nuestro</strong> robot. El procedimiento completo está en Pedro Pathing; aquí tienes el orden y qué resultado debe llegar al proyecto.</p>
+        <a class="button primary" href="https://pedropathing.com/docs/pathing/tuning" target="_blank" rel="noopener noreferrer">Abrir la guía de tuning de Pedro</a>
+        <p class="tuning-intro">Nuestro <code>Tuning.java</code> ya registra los procedimientos de mecanum, Pinpoint, Foresight y tests. Compila e instala esa versión en el Robot Controller antes de usarlos.</p>
+        <ol class="integration-steps"><li><h3>Motores y direcciones</h3><p>Con <code>MecanumTuner</code>, identifica cada rueda y confirma el sentido de giro. Integra el <code>MecanumConfig</code> generado en <code>drivetrainConfig</code>. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/drivetrain/mecanum" target="_blank" rel="noopener noreferrer">Procedimiento de mecanum</a>.</p></li><li><h3>Localización con Pinpoint</h3><p>Configura el dispositivo y los pods; mide direcciones y offsets con <code>PinpointTuner</code>. Integra el resultado en <code>localizerConfig</code> y comprueba que la pose cambia como corresponde al mover físicamente el robot. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/localization/pinpoint" target="_blank" rel="noopener noreferrer">Procedimiento de Pinpoint</a>.</p></li><li><h3>Respuesta de Foresight</h3><p>Con drivetrain y localización correctos, usa <code>ForesightTuner</code> para medir velocidades, desaceleración, frenado y respuesta de los controladores. Integra el <code>ForesightConfig</code> generado. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/foresight" target="_blank" rel="noopener noreferrer">Procedimiento de Foresight</a>.</p></li><li><h3>Verificar el conjunto</h3><p>Confirma que <code>create()</code> utiliza los resultados, vuelve a compilar e instalar y ejecuta las pruebas de localización, manejo, hold, línea, curva e interpolación que correspondan. Después verifica las rutas de competencia. <a class="inline-source" href="https://pedropathing.com/docs/pathing/tuning/test" target="_blank" rel="noopener noreferrer">Pruebas del follower</a>.</p></li></ol>
+        <p>AutoTune se abre desde un navegador conectado a la red del Robot Controller. La dirección habitual indicada por Pedro es <code>http://192.168.43.1:10158</code>. Al terminar un procedimiento, revisa su pestaña Java e incorpora la configuración obtenida a <code>Constants.java</code>.</p>
+        <div class="inline-tip"><strong>Las pruebas mueven hardware real.</strong><p>Prepara un área despejada y sigue el montaje y los movimientos indicados por cada procedimiento. Si usas <code>TestMotorID</code> para identificar ruedas, el código aplica potencia 1: no es una prueba lenta. Haz esa identificación con el robot sujeto y las ruedas sin contacto con el suelo.</p></div>
+        <p>Repite el tuning afectado cuando cambien ruedas, transmisión, masa, fricción o montaje de odometría. Conserva los resultados en el repositorio para que todos trabajen con la misma configuración.</p>
+      </section>
+
+      <section id="chasis-diagnostico" class="tool-section">
+        <h2>Qué puede fallar y dónde revisar</h2>
+        <p>Empieza por hardware y localización antes de cambiar ganancias. Esta tabla orienta la revisión; el síntoma por sí solo no identifica una causa única.</p>
+        <div class="table-wrap"><table class="guide-table chassis-diagnostics"><caption>Síntoma y primera revisión</caption><thead><tr><th scope="col">Si ocurre esto…</th><th scope="col">Revisa primero</th></tr></thead><tbody>
+          <tr><th scope="row">Falla al presionar INIT</th><td>Nombres y tipos de hardware, configuración seleccionada y conexión del Pinpoint. Revisa también los mecanismos que hayas agregado a Robot; lee el dispositivo que señala el error.</td></tr>
+          <tr><th scope="row">Una rueda no gira o gira al revés</th><td>Motor/cableado, posición asignada, nombre y dirección en <code>drivetrainConfig</code>.</td></tr>
+          <tr><th scope="row">Avanzar provoca giro o desplazamiento extraño</th><td>Correspondencia entre ruedas y nombres, direcciones y montaje mecanum. Después, ejes/signos de los controles.</td></tr>
+          <tr><th scope="row">Field-centric apunta a un lado inesperado</th><td>Heading físico inicial, pose estimada, offset de alianza y unidades del ángulo.</td></tr>
+          <tr><th scope="row">La pose no cambia o cambia de forma incorrecta</th><td>Conexiones y montaje de pods, configuración Pinpoint, offsets, direcciones y ejecución de <code>follower.update()</code>.</td></tr>
+          <tr><th scope="row">Oscila, se pasa del punto o mantiene mal la posición</th><td>Primero la localización y el montaje; después tuning de controladores, frenado y condiciones mecánicas de la prueba.</td></tr>
+          <tr><th scope="row">Una ruta no inicia</th><td>Que el comando de <code>followPath</code> se programe, la ruta/pose inicial elegida y que se mantenga <code>super.loop()</code>.</td></tr>
+          <tr><th scope="row">Las rutas no se ejecutan en el orden esperado</th><td>Usa una secuencia explícita; varias llamadas separadas a <code>schedule</code> comparten follower.</td></tr>
+          <tr><th scope="row">Cambias constantes y no cambia el comportamiento</th><td>Archivo/import activo, configuraciones usadas por <code>create()</code>, nueva compilación e instalación y posibles ajustes locales de la ruta.</td></tr>
+
+        </tbody></table></div>
+        <p>Para pedir ayuda, reúne el error exacto, el OpMode utilizado, la configuración de hardware, las constantes y una observación de la pose. Pedro expone datos de diagnóstico del drivetrain, localizador y algoritmo. <a class="inline-source" href="https://pedropathing.com/docs/pathing/guide/debugging" target="_blank" rel="noopener noreferrer">Diagnóstico de Pedro</a> y <a class="inline-source" href="https://pedropathing.com/docs/pathing/faq" target="_blank" rel="noopener noreferrer">problemas comunes</a>.</p>
+
+      </section>
+
+      <section id="chasis-cambios" class="tool-section">
+        <h2>Qué cambiar según lo que necesites</h2>
+        <div class="table-wrap"><table class="guide-table"><thead><tr><th scope="col">Cambio</th><th scope="col">Lugar principal</th></tr></thead><tbody><tr><th scope="row">Nombres o direcciones de motores</th><td><code>Constants.drivetrainConfig</code>.</td></tr><tr><th scope="row">Pods, direcciones u offsets del Pinpoint</th><td><code>Constants.localizerConfig</code>, después de medir o tunear.</td></tr><tr><th scope="row">Respuesta de seguimiento y frenado</th><td><code>Constants.foresightConfig</code>; revisa también modificaciones de cada ruta.</td></tr><tr><th scope="row">Sticks o signos del manejo</th><td><code>EctoMecanum.drive</code>.</td></tr><tr><th scope="row">Pose inicial o alianza del modo</th><td><code>init()</code> del TeleOp o autónomo correspondiente.</td></tr><tr><th scope="row">Geometría y orientación de una ruta</th><td>Su clase de <code>pedroPathing/Paths/</code>.</td></tr><tr><th scope="row">Orden de rutas y acciones</th><td><code>start()</code> y la secuencia del OpMode autónomo.</td></tr><tr><th scope="row">Cambiar de localizador o tipo de drivetrain</th><td>Configuración, <code>Constants.create()</code> y procedimientos de <code>Tuning.java</code>.</td></tr></tbody></table></div>
+        <p>Después de cambiarlo, compila e instala, prueba el comportamiento afectado en TeleOp y autónomo y guarda los valores validados en Git.</p>
+        <p class="chassis-source-note">Referencia: ZIP develop del equipo, con Pedro revhub 3.0.1, tuning 1.0.1 e Ivy Pedro 1.1.1. Usa documentación compatible con Pedro 3.</p>
+        <a class="button secondary" href="https://pedropathing.com/docs/pathing/tuning" target="_blank" rel="noopener noreferrer">Consultar el tuning completo en Pedro Pathing</a>
+      </section>
+      <nav class="page-navigation" aria-label="Navegación entre guías"><a class="next-page" href="#codigo"><span><span class="next-label">ANTERIOR</span><strong>Conoce el código</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></span></a><a class="next-page" href="#intake"><span><span class="next-label">SIGUIENTE</span><strong>Intake</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></a></nav>
+      <footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer>
+    </article>
+<article id="intake-page" class="doc-page" hidden><div class="breadcrumb">Mecanismos <span>/</span> <strong>Intake</strong></div><div class="article-heading"><h1>Construye el intake.</h1><p class="lead">Del archivo vacío al primer botón: crea un mecanismo, conecta su motor y hazlo funcionar con Robot, RobotOpMode y un TeleOp.</p></div><div class="mechanism-gallery"><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/intake-cad-front.png" data-caption="Vista frontal del intake compartido por el mentor" aria-label="Ampliar: Vista frontal del intake compartido por el mentor"><img src="assets/intake-cad-front.png" alt="Vista frontal del intake compartido por el mentor" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Vista frontal del mecanismo.</figcaption></figure><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/intake-cad-rollers.png" data-caption="Conjunto de rodillos del intake compartido por el mentor" aria-label="Ampliar: Conjunto de rodillos del intake compartido por el mentor"><img src="assets/intake-cad-rollers.png" alt="Conjunto de rodillos del intake compartido por el mentor" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Conjunto de rodillos del intake.</figcaption></figure></div><div class="note"><span class="note-icon">i</span><div><strong>Empezamos con la base limpia del mentor.</strong><p>Trabaja en <a class="inline-source" href="#setup/rama">monterreyRegional</a>. La práctica conserva el chasis y reconstruye el intake; los ejemplos de Robot y RobotOpMode no incluyen indexer ni otros mecanismos. No borres la infraestructura de core ni las actualizaciones del chasis.</p></div></div><p class="lesson-howto">Sigue el orden. Cada editor indica dónde va el código y permite copiarlo; “Explicar este bloque” detalla cada línea.</p><div class="mechanism-timeline"><section class="lesson-step" id="intake-crear"><div class="lesson-step-heading"><span class="lesson-step-number">1</span><h2>Crea la carpeta y la clase</h2></div><div class="lesson-step-body">
+<p>La clase Intake reúne el motor y las acciones de recoger y expulsar piezas.</p>
+<p>Dentro de <code>TeamCode/src/main/java/org/firstinspires/ftc/teamcode/mechanisms/</code>, crea un package o carpeta <code>Intake</code>. Dentro, selecciona <strong>New → Java Class</strong> y escribe <code>Intake</code>.</p>
+<div class="table-wrap"><table class="guide-table"><caption>La convención que usaremos en esta práctica</caption><thead><tr><th>Elemento</th><th>Nombre</th></tr></thead><tbody><tr><th>Carpeta del mecanismo</th><td><code>Intake</code>: primera letra mayúscula, resto minúsculas.</td></tr><tr><th>Archivo y clase</th><td><code>Intake.java</code> / <code>Intake</code>, igual que la carpeta.</td></tr><tr><th>Objeto en Robot</th><td><code>intake</code>, todo en minúsculas.</td></tr><tr><th>Motor configurado en FTC</th><td><code>"intake"</code>, el nombre que buscaremos en hardwareMap.</td></tr></tbody></table></div>
+<p>Esta es la convención del equipo; Java distingue mayúsculas y minúsculas.</p>
+<p>Escribe <code>extends EctoMechanism</code>. Usa la sugerencia de importar la clase si aparece sin resolver. Después genera un constructor con <strong>Code → Generate → Constructor</strong> o la corrección sugerida por el editor: debe recibir <code>Robot</code> y llamar a <code>super(robot)</code>.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-skeleton">Copiar código</button></div><p class="code-placement">Archivo completo de este primer paso.</p><pre><code id="intake-skeleton" class="java-highlight">package org.firstinspires.ftc.teamcode.mechanisms.Intake;
+
+import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+public class Intake extends EctoMechanism {
+    public Intake(Robot robot) {
+        super(robot);
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.mechanisms.Intake;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;</code><p>Importa la base común de los mecanismos.</p></li><li value="4"><code>import org.firstinspires.ftc.teamcode.robot.Robot;</code><p>Importa el contenedor compartido del hardware y mecanismos.</p></li><li value="6"><code>public class Intake extends EctoMechanism {</code><p>Crea Intake como mecanismo que hereda EctoMechanism; no es un OpMode seleccionable.</p></li><li value="7"><code>public Intake(Robot robot) {</code><p>Constructor: recibe Robot y, cuando aparece motorId, el nombre del motor que debe buscar.</p></li><li value="8"><code>super(robot);</code><p>Entrega el Robot a EctoMechanism; así heredamos robot, hardwareMap y telemetry.</p></li><li value="9"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="10"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>Intake</code> hereda <code>EctoMechanism</code>, que aporta <code>robot</code>, <code>hardwareMap</code> y <code>telemetry</code>. El TeleOp es quien heredará <code>RobotOpMode</code>. Importar una clase no copia su código: permite referirse a ella por su nombre.</p>
+<p class="lesson-small">Si estás siguiendo la práctica con el ZIP sin limpiar, primero mueve la clase plana existente usando Refactor → Move y actualiza sus referencias. No mantengas simultáneamente <code>mechanisms.Intake</code> y un package con ese mismo nombre. <a class="inline-source" href="https://www.jetbrains.com/help/idea/move-refactorings.html" target="_blank" rel="noopener noreferrer">Refactor de clases</a>.</p></div></section><section class="lesson-step" id="intake-motor"><div class="lesson-step-heading"><span class="lesson-step-number">2</span><h2>Agrega el motor y los estados</h2></div><div class="lesson-step-body">
+<p>Añade estos imports al inicio del archivo y <code>@Config</code> justo encima de la declaración de la clase. Dashboard podrá mostrar sus variables configurables.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-motor-imports">Copiar código</button></div><p class="code-placement">Imports adicionales; @Config va encima de public class Intake.</p><pre><code id="intake-motor-imports" class="java-highlight">import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+@Config</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import com.acmerobotics.dashboard.config.Config;</code><p>Importa la anotación de configuración de Dashboard.</p></li><li value="2"><code>import com.qualcomm.robotcore.hardware.DcMotorEx;</code><p>Importa el motor del SDK FTC con lecturas de velocidad y corriente.</p></li><li value="3"><code>import com.qualcomm.robotcore.hardware.DcMotorSimple;</code><p>Importa la enumeración de dirección del motor.</p></li><li value="5"><code>@Config</code><p>Expone las variables configurables de esta clase en FTC Dashboard; los cambios no se guardan automáticamente en Git.</p></li></ol></details>
+<p>Dentro de la clase, antes del constructor, declara el motor, el estado y las potencias:</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-fields">Copiar código</button></div><p class="code-placement">Campos dentro de la clase, fuera de cualquier método.</p><pre><code id="intake-fields" class="java-highlight">private boolean slowMode = false;
+private Mode mode = Mode.OFF;
+public static double fastPower = -1;
+public static double slowPower = -1;
+public static double offPower = 0;
+public static double reversePower = 1;
+public static double shortReverseTimeMs = 150;
+
+private final DcMotorEx intakeMotor;
+
+enum Mode {
+    ON,
+    OFF,
+    REVERSE
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>private boolean slowMode = false;</code><p>Guarda si se seleccionó la potencia lenta; empieza en modo rápido.</p></li><li value="2"><code>private Mode mode = Mode.OFF;</code><p>Guarda el estado del mecanismo e inicia detenido en OFF.</p></li><li value="3"><code>public static double fastPower = -1;</code><p>Potencia de recolección rápida. Es -1 en la copia del equipo.</p></li><li value="4"><code>public static double slowPower = -1;</code><p>Potencia lenta. También es -1 en esta versión, así que todavía no reduce velocidad.</p></li><li value="5"><code>public static double offPower = 0;</code><p>Potencia de parada: 0.</p></li><li value="6"><code>public static double reversePower = 1;</code><p>Potencia de expulsión: +1. Su dirección física depende también de REVERSE y del montaje.</p></li><li value="7"><code>public static double shortReverseTimeMs = 150;</code><p>Duración de la reversa corta: 150 milisegundos.</p></li><li value="9"><code>private final DcMotorEx intakeMotor;</code><p>Declara el motor: private lo encapsula; final exige asignar su referencia una vez en el constructor.</p></li><li value="11"><code>enum Mode {</code><p>Agrupa los tres estados válidos del mecanismo.</p></li><li value="12"><code>ON,</code><p>Estado para recoger: el periódico aplicará fastPower o slowPower.</p></li><li value="13"><code>OFF,</code><p>Estado detenido: el periódico aplicará offPower.</p></li><li value="14"><code>REVERSE</code><p>Estado para expulsar: el periódico aplicará reversePower.</p></li><li value="15"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Ahora sustituye el constructor del paso anterior. <code>motorId</code> permite que Robot indique qué dispositivo debe usar.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-constructor">Copiar código</button></div><p class="code-placement">Sustituye el constructor anterior; no agregues una segunda copia.</p><pre><code id="intake-constructor" class="java-highlight">public Intake(Robot robot, String motorId) {
+    super(robot);
+    intakeMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);
+    intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Intake(Robot robot, String motorId) {</code><p>Constructor: recibe Robot y, cuando aparece motorId, el nombre del motor que debe buscar.</p></li><li value="2"><code>super(robot);</code><p>Entrega el Robot a EctoMechanism; así heredamos robot, hardwareMap y telemetry.</p></li><li value="3"><code>intakeMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);</code><p>Busca el dispositivo DcMotorEx cuyo nombre coincide con motorId y guarda su referencia.</p></li><li value="4"><code>intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);</code><p>Invierte por software el sentido del motor, como en la implementación del equipo.</p></li><li value="5"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Las potencias van de -1 a 1: son la salida solicitada, no una velocidad garantizada. El estado indica la acción: <code>ON</code> recoge, <code>OFF</code> detiene y <code>REVERSE</code> expulsa. La dirección y los signos vienen del mecanismo del equipo; verifica el sentido físico al probarlo.</p></div></section><section class="lesson-step" id="intake-periodic"><div class="lesson-step-heading"><span class="lesson-step-number">3</span><h2>Convierte el estado en movimiento</h2></div><div class="lesson-step-body">
+<p>El motor no se mueve solo por guardar <code>Mode.ON</code>. <code>periodic()</code> devuelve un comando repetido que traduce el estado en potencia y añade mediciones a la telemetría.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-periodic-imports">Copiar código</button></div><p class="code-placement">Añade estos imports junto a los demás.</p><pre><code id="intake-periodic-imports" class="java-highlight">import static com.pedropathing.ivy.commands.Commands.infinite;
+import com.pedropathing.ivy.Command;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import static com.pedropathing.ivy.commands.Commands.infinite;</code><p>Importa la función que construye comandos repetidos.</p></li><li value="2"><code>import com.pedropathing.ivy.Command;</code><p>Importa el tipo de comando Ivy.</p></li><li value="3"><code>import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;</code><p>Importa las unidades de corriente del SDK.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-periodic-code">Copiar código</button></div><p class="code-placement">Método dentro de la clase, después del constructor. Reemplaza cualquier periodic vacío.</p><pre><code id="intake-periodic-code" class="java-highlight">@Override
+public Command periodic() {
+    return infinite(() -&gt; {
+        switch (mode) {
+            case ON:
+                intakeMotor.setPower(slowMode ? slowPower : fastPower);
+                break;
+            case OFF:
+                intakeMotor.setPower(offPower);
+                break;
+            case REVERSE:
+                intakeMotor.setPower(reversePower);
+                break;
+        }
+
+        telemetry.addData(&quot;Intake Current&quot;, intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData(&quot;Intake Velocity&quot;, intakeMotor.getVelocity());
+    });
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="2"><code>public Command periodic() {</code><p>Devuelve el comando que aplica continuamente el estado al motor.</p></li><li value="3"><code>return infinite(() -&gt; {</code><p>Crea un comando que repetirá las instrucciones de su cuerpo cuando lo procese el scheduler.</p></li><li value="4"><code>switch (mode) {</code><p>Elige la salida del motor según el estado actual del mecanismo.</p></li><li value="5"><code>case ON:</code><p>Selecciona la salida de recolección cuando mode es ON.</p></li><li value="6"><code>intakeMotor.setPower(slowMode ? slowPower : fastPower);</code><p>Aplica slowPower si slowMode es true; en caso contrario, fastPower.</p></li><li value="7"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="8"><code>case OFF:</code><p>Selecciona la salida de parada cuando mode es OFF.</p></li><li value="9"><code>intakeMotor.setPower(offPower);</code><p>Escribe la potencia de parada en el motor.</p></li><li value="10"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="11"><code>case REVERSE:</code><p>Selecciona la salida invertida cuando mode es REVERSE.</p></li><li value="12"><code>intakeMotor.setPower(reversePower);</code><p>Escribe la potencia de expulsión en el motor.</p></li><li value="13"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="14"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="16"><code>telemetry.addData(&quot;Intake Current&quot;, intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));</code><p>Añade la corriente medida en miliamperios a la telemetría.</p></li><li value="17"><code>telemetry.addData(&quot;Intake Velocity&quot;, intakeMotor.getVelocity());</code><p>Añade la velocidad medida del motor, en ticks por segundo.</p></li><li value="18"><code>});</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="19"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>infinite</code> crea el comando; todavía habrá que programarlo en <code>RobotOpMode.init()</code>. No crea un hilo separado. La base publicará los datos con <code>robot.telemetry.update()</code>.</p>
+<p>En esta versión <code>fastPower</code> y <code>slowPower</code> valen -1: el modo lento existe, pero aún no reduce la potencia.</p></div></section><section class="lesson-step" id="intake-comandos"><div class="lesson-step-heading"><span class="lesson-step-number">4</span><h2>Crea los comandos del mecanismo</h2></div><div class="lesson-step-body">
+<p>Los comandos se escriben como métodos de <code>Intake</code>, no dentro del objeto motor. Cada uno devuelve una acción Ivy que cambia el estado y declara que necesita <code>intakeMotor</code>.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-command-imports">Copiar código</button></div><p class="code-placement">Imports adicionales de los comandos auxiliares.</p><pre><code id="intake-command-imports" class="java-highlight">import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.conditional;
+import static com.pedropathing.ivy.commands.Commands.waitMs;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import static com.pedropathing.ivy.commands.Commands.instant;</code><p>Importa la función que construye una acción instantánea.</p></li><li value="2"><code>import static com.pedropathing.ivy.commands.Commands.conditional;</code><p>Importa la función que selecciona un comando según una condición.</p></li><li value="3"><code>import static com.pedropathing.ivy.commands.Commands.waitMs;</code><p>Importa una espera de comando en milisegundos; no bloquea el hilo con un sleep.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-basic-commands">Copiar código</button></div><p class="code-placement">Añade estos métodos dentro de la clase, fuera de periodic().</p><pre><code id="intake-basic-commands" class="java-highlight">public Command on() {
+    return instant(() -&gt; mode = Mode.ON).requiring(intakeMotor);
+}
+
+public Command off() {
+    return instant(() -&gt; mode = Mode.OFF).requiring(intakeMotor);
+}
+
+public Command reverse() {
+    return instant(() -&gt; mode = Mode.REVERSE).requiring(intakeMotor);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Command on() {</code><p>Construye una orden de encendido.</p></li><li value="2"><code>return instant(() -&gt; mode = Mode.ON).requiring(intakeMotor);</code><p>Crea un comando instantáneo que pide ON y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="3"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="5"><code>public Command off() {</code><p>Construye una orden de apagado.</p></li><li value="6"><code>return instant(() -&gt; mode = Mode.OFF).requiring(intakeMotor);</code><p>Crea un comando instantáneo que pide OFF y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="9"><code>public Command reverse() {</code><p>Construye una orden de expulsión.</p></li><li value="10"><code>return instant(() -&gt; mode = Mode.REVERSE).requiring(intakeMotor);</code><p>Crea un comando instantáneo que pide REVERSE y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>on()</code> construye un comando. <code>on().schedule()</code> lo entrega al scheduler. Después, el periódico aplicará el estado que pidió ese comando.</p>
+<details class="details"><summary>Atajos: toggle, reversa corta y modo lento</summary><div class="details-body"><p>Estos métodos también están en la implementación del equipo. La reversa corta espera 150 ms y termina en ON; no recupera el estado anterior.</p><div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-shortcuts">Copiar código</button></div><p class="code-placement">Métodos adicionales dentro de la clase.</p><pre><code id="intake-shortcuts" class="java-highlight">public Command toggle() {
+    return conditional(() -&gt; mode == Mode.OFF, on(), off());
+}
+
+public Command shortReverse() {
+    return reverse().then(waitMs(shortReverseTimeMs)).then(on());
+}
+
+public void slowDown() {
+    slowMode = true;
+}
+
+public void speedUp() {
+    slowMode = false;
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Command toggle() {</code><p>Construye una orden para alternar entre apagado y encendido.</p></li><li value="2"><code>return conditional(() -&gt; mode == Mode.OFF, on(), off());</code><p>Si el estado es OFF selecciona on(); en los demás casos selecciona off().</p></li><li value="3"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="5"><code>public Command shortReverse() {</code><p>Construye una secuencia de reversa breve.</p></li><li value="6"><code>return reverse().then(waitMs(shortReverseTimeMs)).then(on());</code><p>Encadena reversa, espera de 150 ms y encendido. Termina en ON, no en el estado anterior.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="9"><code>public void slowDown() {</code><p>Selecciona la potencia lenta; no crea ni programa un comando.</p></li><li value="10"><code>slowMode = true;</code><p>Selecciona la potencia de modo lento para las siguientes actualizaciones.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="13"><code>public void speedUp() {</code><p>Selecciona la potencia rápida; no crea ni programa un comando.</p></li><li value="14"><code>slowMode = false;</code><p>Selecciona la potencia de modo rápido para las siguientes actualizaciones.</p></li><li value="15"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details></div></details></div></section><section class="lesson-step" id="intake-default"><div class="lesson-step-heading"><span class="lesson-step-number">5</span><h2>Define la recolección y la expulsión</h2></div><div class="lesson-step-body">
+<p>La recolección predeterminada pide ON y tiene prioridad baja. Al presionar Y, la expulsión toma el mismo motor con prioridad mayor. Al soltar Y, termina la expulsión y vuelve la recolección.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-default-imports">Copiar código</button></div><p class="code-placement">Imports adicionales.</p><pre><code id="intake-default-imports" class="java-highlight">import com.pedropathing.ivy.behaviors.InterruptedBehavior;
+import java.util.function.BooleanSupplier;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import com.pedropathing.ivy.behaviors.InterruptedBehavior;</code><p>Importa las opciones de interrupción del comando.</p></li><li value="2"><code>import java.util.function.BooleanSupplier;</code><p>Importa una función que devuelve un booleano al consultarla.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-default-code">Copiar código</button></div><p class="code-placement">Añade ambos métodos dentro de la clase.</p><pre><code id="intake-default-code" class="java-highlight">public Command defaultCommand(){
+    return infinite(()-&gt; mode = Mode.ON)
+            .setStart(()-&gt; mode = Mode.ON)
+            .requiring(intakeMotor)
+            .setPriority(-1)
+            .setInterruptedBehavior(InterruptedBehavior.SUSPEND);
+}
+
+public Command outtake(BooleanSupplier held){
+    return Command.build()
+            .setStart(()-&gt; mode = Mode.REVERSE)
+            .setDone(()-&gt; !held.getAsBoolean())
+            .setEnd(endCondition -&gt; mode = Mode.ON)
+            .requiring(intakeMotor)
+            .setPriority(100);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Command defaultCommand(){</code><p>Construye la recolección automática de baja prioridad.</p></li><li value="2"><code>return infinite(()-&gt; mode = Mode.ON)</code><p>Crea un comando que vuelve a solicitar ON en cada ejecución.</p></li><li value="3"><code>.setStart(()-&gt; mode = Mode.ON)</code><p>Pone el estado en ON cuando empieza el comando predeterminado.</p></li><li value="4"><code>.requiring(intakeMotor)</code><p>Declara que la acción necesita el motor para resolver conflictos con otros comandos.</p></li><li value="5"><code>.setPriority(-1)</code><p>Da baja prioridad al comando predeterminado.</p></li><li value="6"><code>.setInterruptedBehavior(InterruptedBehavior.SUSPEND);</code><p>Permite suspender el comando predeterminado cuando otro de mayor prioridad necesita el motor.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="9"><code>public Command outtake(BooleanSupplier held){</code><p>Construye una expulsión que termina al soltar el botón; held se consulta durante la ejecución.</p></li><li value="10"><code>return Command.build()</code><p>Empieza a construir un comando con inicio, condición de término y finalización.</p></li><li value="11"><code>.setStart(()-&gt; mode = Mode.REVERSE)</code><p>Pone el estado en REVERSE cuando empieza la expulsión.</p></li><li value="12"><code>.setDone(()-&gt; !held.getAsBoolean())</code><p>Consulta el botón en cada ejecución: el comando termina cuando deja de estar presionado.</p></li><li value="13"><code>.setEnd(endCondition -&gt; mode = Mode.ON)</code><p>Al finalizar, vuelve a pedir ON. Aquí no se distingue la causa de finalización.</p></li><li value="14"><code>.requiring(intakeMotor)</code><p>Declara que la acción necesita el motor para resolver conflictos con otros comandos.</p></li><li value="15"><code>.setPriority(100);</code><p>Da prioridad alta a la expulsión frente al comando predeterminado.</p></li><li value="16"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>BooleanSupplier held</code> es una función que devuelve un booleano y consulta el botón durante la ejecución; <code>() -&gt;</code> define una acción o condición que se ejecutará después. <code>.requiring(intakeMotor)</code> identifica el recurso compartido; las prioridades -1 y 100 permiten que la expulsión suspenda el comando predeterminado.</p>
+<p>Como <code>defaultCommand()</code> vuelve a pedir ON, un <code>off()</code> instantáneo no garantiza dejarlo apagado mientras ese comando siga activo. En el TeleOp de esta práctica usaremos START para la recolección y Y para expulsar.</p></div></section><section class="lesson-step" id="intake-robot"><div class="lesson-step-heading"><span class="lesson-step-number">6</span><h2>Registra el intake en Robot</h2></div><div class="lesson-step-body">
+<p>Abre <code>robot/Robot.java</code>. Hay tres cambios: <strong>importar</strong> <code>mechanisms.Intake.Intake</code>, <strong>declarar</strong> <code>public final Intake intake;</code> junto al campo del chasis y <strong>construir</strong> <code>intake = new Intake(this, "intake");</code> dentro del constructor, después de preparar hardwareMap y telemetría.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Robot.java</strong></div><button class="copy-button" data-copy="intake-robot-file">Copiar código</button></div><p class="code-placement">Archivo completo para la base limpia: chasis e intake, sin indexer.</p><pre><code id="intake-robot-file" class="java-highlight">package org.firstinspires.ftc.teamcode.robot;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.mechanisms.EctoMecanum.EctoMecanum;
+import org.firstinspires.ftc.teamcode.mechanisms.Intake.Intake;
+
+public class Robot {
+    public final HardwareMap hardwareMap;
+    public final Telemetry telemetry;
+    public final EctoMecanum mecanum;
+    public final Intake intake;
+
+    public Robot(OpMode opMode) {
+        hardwareMap = opMode.hardwareMap;
+        telemetry = new MultipleTelemetry(
+            opMode.telemetry,
+            FtcDashboard.getInstance().getTelemetry()
+        );
+        mecanum = new EctoMecanum(this);
+        intake = new Intake(this, &quot;intake&quot;);
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robot;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.acmerobotics.dashboard.FtcDashboard;</code><p>Importa el acceso a Dashboard.</p></li><li value="4"><code>import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;</code><p>Importa la combinación de varias salidas de telemetría.</p></li><li value="5"><code>import com.qualcomm.robotcore.eventloop.opmode.OpMode;</code><p>Importa el tipo base de un modo FTC.</p></li><li value="6"><code>import com.qualcomm.robotcore.hardware.HardwareMap;</code><p>Importa el mapa de dispositivos del robot.</p></li><li value="7"><code>import org.firstinspires.ftc.robotcore.external.Telemetry;</code><p>Importa el tipo de datos enviados al conductor.</p></li><li value="8"><code>import org.firstinspires.ftc.teamcode.mechanisms.EctoMecanum.EctoMecanum;</code><p>Importa el chasis existente.</p></li><li value="9"><code>import org.firstinspires.ftc.teamcode.mechanisms.Intake.Intake;</code><p>Importa la clase Intake de la nueva subcarpeta.</p></li><li value="11"><code>public class Robot {</code><p>Agrupa el hardware compartido y las instancias de los mecanismos.</p></li><li value="12"><code>public final HardwareMap hardwareMap;</code><p>Guarda una referencia compartida: hardwareMap. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="13"><code>public final Telemetry telemetry;</code><p>Guarda una referencia compartida: telemetry. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="14"><code>public final EctoMecanum mecanum;</code><p>Guarda una referencia compartida: mecanum. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="15"><code>public final Intake intake;</code><p>Guarda una referencia compartida: intake. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="17"><code>public Robot(OpMode opMode) {</code><p>Constructor de Robot: recibe el OpMode que lo está creando.</p></li><li value="18"><code>hardwareMap = opMode.hardwareMap;</code><p>Conserva el mapa de hardware del OpMode para compartirlo con los mecanismos.</p></li><li value="19"><code>telemetry = new MultipleTelemetry(</code><p>Prepara una telemetría combinada para Driver Station y Dashboard.</p></li><li value="20"><code>opMode.telemetry,</code><p>Incluye la telemetría que ve el conductor en Driver Station.</p></li><li value="21"><code>FtcDashboard.getInstance().getTelemetry()</code><p>Incluye la telemetría que se publica en FTC Dashboard.</p></li><li value="22"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="23"><code>mecanum = new EctoMecanum(this);</code><p>Conserva el chasis de la práctica; aquí this es Robot.</p></li><li value="24"><code>intake = new Intake(this, &quot;intake&quot;);</code><p>Construye el mecanismo y le pasa Robot y el nombre exacto del motor en la configuración FTC.</p></li><li value="25"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="26"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>En <code>public final Intake intake;</code>, el primer <code>Intake</code> es el tipo; <code>intake</code> es el nombre del objeto. El texto <code>"intake"</code> del constructor es el nombre del motor configurado en FTC. Aquí <code>this</code> es Robot y se comparte con el mecanismo.</p></div></section><section class="lesson-step" id="intake-opmode"><div class="lesson-step-heading"><span class="lesson-step-number">7</span><h2>Programa el periódico en RobotOpMode</h2></div><div class="lesson-step-body">
+<p>Abre <code>robot/RobotOpMode.java</code>. Dentro de <code>init()</code>, <strong>después de crear Robot</strong>, agrega <code>robot.intake.periodic()</code> a la llamada de <code>schedule</code>, junto al periódico del chasis. Se programa una vez, no en cada loop.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>RobotOpMode.java</strong></div><button class="copy-button" data-copy="intake-opmode-file">Copiar código</button></div><p class="code-placement">Base completa de la práctica. Conserva scheduler, botones, init_loop y telemetría.</p><pre><code id="intake-opmode-file" class="java-highlight">package org.firstinspires.ftc.teamcode.robot;
+
+import static com.pedropathing.ivy.Scheduler.schedule;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;
+import com.pedropathing.ivy.Scheduler;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.teamcode.core.Control.EctoButton;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class RobotOpMode extends OpMode {
+    protected Robot robot;
+    private final List&lt;EctoButton&gt; buttons = new ArrayList&lt;&gt;();
+
+    @Override
+    public void init() {
+        buttons.clear();
+        Scheduler.reset();
+        robot = new Robot(this);
+        schedule(
+            robot.mecanum.periodic(),
+            robot.intake.periodic()
+        );
+    }
+
+    protected EctoButton button(GamepadEx gamepad, Button key) {
+        EctoButton button = new EctoButton(gamepad, key);
+        buttons.add(button);
+        return button;
+    }
+
+    @Override
+    public void init_loop() {
+        Scheduler.execute();
+    }
+
+    @Override
+    public void loop() {
+        buttons.forEach(EctoButton::update);
+        Scheduler.execute();
+        robot.telemetry.update();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robot;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import static com.pedropathing.ivy.Scheduler.schedule;</code><p>Permite programar comandos sin escribir Scheduler delante.</p></li><li value="4"><code>import com.arcrobotics.ftclib.gamepad.GamepadEx;</code><p>Importa la envoltura del control de FTCLib.</p></li><li value="5"><code>import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;</code><p>Importa el tipo de botón de FTCLib.</p></li><li value="6"><code>import com.pedropathing.ivy.Scheduler;</code><p>Importa el planificador de comandos Ivy.</p></li><li value="7"><code>import com.qualcomm.robotcore.eventloop.opmode.OpMode;</code><p>Importa el tipo base de un modo FTC.</p></li><li value="8"><code>import org.firstinspires.ftc.teamcode.core.Control.EctoButton;</code><p>Importa el lector que conecta botones con comandos.</p></li><li value="9"><code>import java.util.ArrayList;</code><p>Importa la implementación de lista usada para los botones.</p></li><li value="10"><code>import java.util.List;</code><p>Importa la interfaz de listas de Java.</p></li><li value="12"><code>public abstract class RobotOpMode extends OpMode {</code><p>Define la clase base común; abstract evita instanciarla directamente.</p></li><li value="13"><code>protected Robot robot;</code><p>Guarda una referencia compartida: robot. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="14"><code>private final List&lt;EctoButton&gt; buttons = new ArrayList&lt;&gt;();</code><p>Conserva los lectores registrados en una lista que actualizará la base.</p></li><li value="16"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="17"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="18"><code>buttons.clear();</code><p>Vacía los botones registrados por la base al preparar el OpMode.</p></li><li value="19"><code>Scheduler.reset();</code><p>Limpia los comandos que conservaba el scheduler.</p></li><li value="20"><code>robot = new Robot(this);</code><p>Crea Robot para este OpMode; aquí this es el OpMode.</p></li><li value="21"><code>schedule(</code><p>Entrega al scheduler los comandos periódicos que aparecen a continuación.</p></li><li value="22"><code>robot.mecanum.periodic(),</code><p>Conserva la actualización del chasis que ya estaba en la base.</p></li><li value="23"><code>robot.intake.periodic()</code><p>Agrega la actualización del intake a la misma llamada de schedule.</p></li><li value="24"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="25"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="27"><code>protected EctoButton button(GamepadEx gamepad, Button key) {</code><p>Helper heredado: crea un lector y lo registra antes de devolverlo.</p></li><li value="28"><code>EctoButton button = new EctoButton(gamepad, key);</code><p>Construye el lector del control y el botón recibidos por el helper.</p></li><li value="29"><code>buttons.add(button);</code><p>Registra el nuevo EctoButton para que la base lo actualice.</p></li><li value="30"><code>return button;</code><p>Devuelve el lector registrado para poder asociarle un comando.</p></li><li value="31"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="33"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="34"><code>public void init_loop() {</code><p>Se repite mientras se espera START.</p></li><li value="35"><code>Scheduler.execute();</code><p>Procesa los comandos programados en esta vuelta del ciclo.</p></li><li value="36"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="38"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="39"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="40"><code>buttons.forEach(EctoButton::update);</code><p>Actualiza cada lector registrado para detectar pulsaciones y liberaciones.</p></li><li value="41"><code>Scheduler.execute();</code><p>Procesa los comandos programados en esta vuelta del ciclo.</p></li><li value="42"><code>robot.telemetry.update();</code><p>Publica los datos reunidos por el robot y los mecanismos.</p></li><li value="43"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="44"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>El helper <code>button(...)</code> construye un <code>EctoButton</code> y lo agrega a <code>buttons</code>. Luego <code>loop()</code> actualiza esa lista. Si creas el lector por tu cuenta y no lo registras, la base no lo actualizará.</p></div></section><section class="lesson-step" id="intake-teleop"><div class="lesson-step-heading"><span class="lesson-step-number">8</span><h2>Conecta el mecanismo a un TeleOp</h2></div><div class="lesson-step-body">
+<p>En <code>robotOpModes/Comp/</code>, crea <code>IntakeTeleOp.java</code>. Empieza con este modo vacío que hereda la infraestructura del equipo:</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>IntakeTeleOp.java</strong></div><button class="copy-button" data-copy="intake-teleop-empty">Copiar código</button></div><p class="code-placement">Primera versión del archivo: todavía no asigna controles.</p><pre><code id="intake-teleop-empty" class="java-highlight">package org.firstinspires.ftc.teamcode.robotOpModes.Comp;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+
+@TeleOp(name = &quot;Prueba Intake&quot;, group = &quot;2-tests&quot;)
+public class IntakeTeleOp extends RobotOpMode {
+    @Override
+    public void init() {
+        super.init();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robotOpModes.Comp;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.qualcomm.robotcore.eventloop.opmode.TeleOp;</code><p>Importa la anotación que registra el modo en FTC.</p></li><li value="4"><code>import org.firstinspires.ftc.teamcode.robot.RobotOpMode;</code><p>Importa la base de los OpModes del equipo.</p></li><li value="6"><code>@TeleOp(name = &quot;Prueba Intake&quot;, group = &quot;2-tests&quot;)</code><p>Registra el modo con el nombre Prueba Intake dentro del grupo 2-tests.</p></li><li value="7"><code>public class IntakeTeleOp extends RobotOpMode {</code><p>Crea el TeleOp de prueba y hereda la infraestructura de RobotOpMode.</p></li><li value="8"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="9"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="10"><code>super.init();</code><p>Ejecuta la inicialización de RobotOpMode antes de usar robot o registrar controles.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="13"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="14"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="15"><code>super.loop();</code><p>Mantiene la actualización de botones, scheduler y telemetría de la clase base.</p></li><li value="16"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="17"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Ahora añade el control, el <code>EctoButton</code> y sus métodos. Esta segunda versión <strong>reemplaza</strong> la anterior:</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>IntakeTeleOp.java</strong></div><button class="copy-button" data-copy="intake-teleop-final">Copiar código</button></div><p class="code-placement">Archivo completo después de conectar el intake.</p><pre><code id="intake-teleop-final" class="java-highlight">package org.firstinspires.ftc.teamcode.robotOpModes.Comp;
+
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.core.Control.EctoButton;
+import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+
+@TeleOp(name = &quot;Prueba Intake&quot;, group = &quot;2-tests&quot;)
+public class IntakeTeleOp extends RobotOpMode {
+    private GamepadEx gamepad;
+    private EctoButton outtake;
+
+    @Override
+    public void init() {
+        super.init();
+        gamepad = new GamepadEx(gamepad1);
+        outtake = button(gamepad, GamepadKeys.Button.Y);
+        outtake.whenActive(
+            robot.intake.outtake(outtake::isPressed)
+        );
+    }
+
+    @Override
+    public void start() {
+        robot.intake.defaultCommand().schedule();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robotOpModes.Comp;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.arcrobotics.ftclib.gamepad.GamepadEx;</code><p>Importa la envoltura del control de FTCLib.</p></li><li value="4"><code>import com.arcrobotics.ftclib.gamepad.GamepadKeys;</code><p>Importa los nombres de botones de FTCLib.</p></li><li value="5"><code>import com.qualcomm.robotcore.eventloop.opmode.TeleOp;</code><p>Importa la anotación que registra el modo en FTC.</p></li><li value="6"><code>import org.firstinspires.ftc.teamcode.core.Control.EctoButton;</code><p>Importa el lector que conecta botones con comandos.</p></li><li value="7"><code>import org.firstinspires.ftc.teamcode.robot.RobotOpMode;</code><p>Importa la base de los OpModes del equipo.</p></li><li value="9"><code>@TeleOp(name = &quot;Prueba Intake&quot;, group = &quot;2-tests&quot;)</code><p>Registra el modo con el nombre Prueba Intake dentro del grupo 2-tests.</p></li><li value="10"><code>public class IntakeTeleOp extends RobotOpMode {</code><p>Crea el TeleOp de prueba y hereda la infraestructura de RobotOpMode.</p></li><li value="11"><code>private GamepadEx gamepad;</code><p>Guarda el control de FTCLib que se inicializará en init().</p></li><li value="12"><code>private EctoButton outtake;</code><p>Guarda el lector del botón Y para poder consultar si sigue presionado.</p></li><li value="14"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="15"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="16"><code>super.init();</code><p>Ejecuta la inicialización de RobotOpMode antes de usar robot o registrar controles.</p></li><li value="17"><code>gamepad = new GamepadEx(gamepad1);</code><p>Envuelve el primer control FTC con las funciones de FTCLib.</p></li><li value="18"><code>outtake = button(gamepad, GamepadKeys.Button.Y);</code><p>Crea y registra Y usando el helper de RobotOpMode.</p></li><li value="19"><code>outtake.whenActive(</code><p>Asocia una acción al instante en que se presiona el botón.</p></li><li value="20"><code>robot.intake.outtake(outtake::isPressed)</code><p>Usa el mismo intake de Robot y entrega una referencia al método que consulta si Y sigue pulsado.</p></li><li value="21"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="22"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="24"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="25"><code>public void start() {</code><p>Se ejecuta cuando el conductor presiona START.</p></li><li value="26"><code>robot.intake.defaultCommand().schedule();</code><p>Programa la recolección automática una vez al iniciar START.</p></li><li value="27"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="29"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="30"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="31"><code>super.loop();</code><p>Mantiene la actualización de botones, scheduler y telemetría de la clase base.</p></li><li value="32"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="33"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>button(...)</code> registra Y y <code>outtake::isPressed</code> entrega el método para consultar si sigue presionado. Conserva <code>super.init()</code> antes de usar Robot y <code>super.loop()</code> para procesar controles y comandos.</p>
+<div class="table-wrap"><table class="guide-table"><caption>Qué debería ocurrir en esta práctica</caption><thead><tr><th>Momento</th><th>Resultado programado</th></tr></thead><tbody><tr><th>INIT</th><td>Se construyen chasis e intake; el intake inicia en OFF.</td></tr><tr><th>START</th><td>Se programa la recolección automática.</td></tr><tr><th>Y presionado</th><td>El intake pasa a REVERSE.</td></tr><tr><th>Soltar Y</th><td>Termina outtake y el intake vuelve a ON.</td></tr></tbody></table></div>
+<p>Este TeleOp no manda conducción, pero <code>RobotOpMode</code> sí construye el chasis: necesita sus cuatro motores y Pinpoint configurados, además del motor <code>"intake"</code>. START hará girar el intake. Sigue <a class="inline-source" href="#codigo/probar-cambios">los pasos para compilar, instalar y probar</a>.</p>
+<details class="details"><summary>Consultar Intake.java completo después de construirlo</summary><div class="details-body"><p>Referencia final con los métodos explicados arriba. El package corresponde a la carpeta Intake de esta práctica.</p><div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Intake.java</strong></div><button class="copy-button" data-copy="intake-final-file">Copiar código</button></div><p class="code-placement">Referencia completa de la clase del mecanismo.</p><pre><code id="intake-final-file" class="java-highlight">package org.firstinspires.ftc.teamcode.mechanisms.Intake;
+
+import static com.pedropathing.ivy.commands.Commands.conditional;
+import static com.pedropathing.ivy.commands.Commands.infinite;
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+
+import com.acmerobotics.dashboard.config.Config;
+import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+import com.pedropathing.ivy.behaviors.InterruptedBehavior;
+import java.util.function.BooleanSupplier;
+
+@Config
+public class Intake extends EctoMechanism {
+
+    private boolean slowMode = false;
+    private Mode mode = Mode.OFF;
+    public static double fastPower = -1;
+    public static double slowPower = -1;
+    public static double offPower = 0;
+    public static double reversePower = 1;
+    public static double shortReverseTimeMs = 150;
+
+    private final DcMotorEx intakeMotor;
+
+
+    public Intake(Robot robot, String motorId) {
+        super(robot);
+        intakeMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+
+    public Command defaultCommand(){
+        return infinite(()-&gt; mode = Mode.ON)
+                .setStart(()-&gt; mode = Mode.ON)
+                .requiring(intakeMotor)
+                .setPriority(-1)
+                .setInterruptedBehavior(InterruptedBehavior.SUSPEND);
+    }
+
+    public Command outtake(BooleanSupplier held){
+        return Command.build()
+                .setStart(()-&gt; mode = Mode.REVERSE)
+                .setDone(()-&gt; !held.getAsBoolean())
+                .setEnd(endCondition -&gt; mode = Mode.ON)
+                .requiring(intakeMotor)
+                .setPriority(100);
+    }
+
+    public Command on() {
+        return instant(() -&gt; mode = Mode.ON).requiring(intakeMotor);
+    }
+
+    public Command off() {
+        return instant(() -&gt; mode = Mode.OFF).requiring(intakeMotor);
+    }
+
+    public Command reverse() {
+        return instant(() -&gt; mode = Mode.REVERSE).requiring(intakeMotor);
+    }
+
+    public Command shortReverse() {
+        return reverse().then(waitMs(shortReverseTimeMs)).then(on());
+    }
+
+    public Command toggle() {
+        return conditional(() -&gt; mode == Mode.OFF, on(), off());
+    }
+
+    public void slowDown() {
+        slowMode = true;
+    }
+
+    public void speedUp() {
+        slowMode = false;
+    }
+
+    public Command periodic() {
+        return infinite(() -&gt; {
+            switch (mode) {
+                case ON:
+                    intakeMotor.setPower(slowMode ? slowPower : fastPower);
+                    break;
+                case OFF:
+                    intakeMotor.setPower(offPower);
+                    break;
+                case REVERSE:
+                    intakeMotor.setPower(reversePower);
+                    break;
+            }
+
+            telemetry.addData(&quot;Intake Current&quot;, intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));
+            telemetry.addData(&quot;Intake Velocity&quot;, intakeMotor.getVelocity());
+        });
+    }
+
+    enum Mode {
+        ON,
+        OFF,
+        REVERSE
+    }
+}</code></pre></div></div></details>
+<h3>Si algo no responde</h3><ul class="instructions"><li>Error de import: revisa <code>mechanisms.Intake.Intake</code> y elimina referencias a la clase plana antigua.</li><li>Error en INIT: comprueba el nombre <code>"intake"</code> y el hardware del chasis que construye la base.</li><li>Cambia el estado pero no gira: revisa que <code>RobotOpMode.init()</code> programe <code>robot.intake.periodic()</code>.</li><li>Y no responde: usa el helper <code>button(...)</code> y conserva <code>super.loop()</code>.</li><li>Gira al revés: revisa el montaje, la dirección y las potencias; no cambies varias cosas a la vez.</li></ul></div></section></div><nav class="page-navigation" aria-label="Navegación entre guías"><a class="next-page" href="#chasis"><span><span class="next-label">ANTERIOR</span><strong>Chasis</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></span></a><a class="next-page" href="#indexer"><span><span class="next-label">SIGUIENTE</span><strong>Indexer</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></a></nav><footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer></article>
+<article id="indexer-page" class="doc-page" hidden><div class="breadcrumb">Mecanismos <span>/</span> <strong>Indexer</strong></div><div class="article-heading"><h1>Construye el indexer.</h1><p class="lead">La misma estructura del intake: motor, estados, comandos y conexión al robot. Ahora alimentaremos piezas con un botón y nos detendremos al soltarlo.</p></div><div class="mechanism-gallery"><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/indexer-cad-detail.png" data-caption="Detalle del indexer y su recorrido de piezas" aria-label="Ampliar: Detalle del indexer y su recorrido de piezas"><img src="assets/indexer-cad-detail.png" alt="Detalle del indexer y su recorrido de piezas" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Detalle del transporte de piezas.</figcaption></figure><figure class="mechanism-figure"><button class="mechanism-photo" data-preview="assets/indexer-cad-overview.png" data-caption="Vista del montaje del indexer dentro del robot" aria-label="Ampliar: Vista del montaje del indexer dentro del robot"><img src="assets/indexer-cad-overview.png" alt="Vista del montaje del indexer dentro del robot" loading="lazy"><span>Ampliar imagen</span></button><figcaption>Montaje del mecanismo en el robot.</figcaption></figure></div><div class="note"><span class="note-icon">i</span><div><strong>Continúa después de Intake.</strong><p>Trabaja en <a class="inline-source" href="#setup/rama">monterreyRegional</a>. Los ejemplos conservan el chasis y el intake que ya construiste. Solo agregamos Indexer y su registro.</p></div></div><div class="mechanism-timeline"><section class="lesson-step" id="indexer-crear"><div class="lesson-step-heading"><span class="lesson-step-number">1</span><h2>Crea la carpeta y la clase</h2></div><div class="lesson-step-body">
+<p>La clase Indexer reúne el motor, los estados y las acciones que transportan las piezas dentro del robot.</p>
+<p>En <code>TeamCode/src/main/java/org/firstinspires/ftc/teamcode/mechanisms/</code>, crea la carpeta o package <code>Indexer</code> y, dentro, <strong>New → Java Class → Indexer</strong>.</p>
+<div class="table-wrap"><table class="guide-table"><thead><tr><th>Elemento</th><th>Nombre</th></tr></thead><tbody><tr><th>Carpeta y clase</th><td><code>Indexer</code>: primera letra mayúscula, resto en minúsculas.</td></tr><tr><th>Archivo</th><td><code>Indexer.java</code>, dentro de esa carpeta.</td></tr><tr><th>Objeto en Robot</th><td><code>indexer</code>, en minúsculas.</td></tr><tr><th>Motor en FTC</th><td><code>"indexer"</code>, coincide con el texto usado por hardwareMap.</td></tr></tbody></table></div>
+<p>Escribe <code>extends EctoMechanism</code>, importa la base y genera un constructor que reciba Robot y llame a <code>super(robot)</code>.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-skeleton">Copiar código</button></div><p class="code-placement">Archivo completo del primer paso.</p><pre><code id="indexer-skeleton" class="java-highlight">package org.firstinspires.ftc.teamcode.mechanisms.Indexer;
+
+import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+public class Indexer extends EctoMechanism {
+    public Indexer(Robot robot) {
+        super(robot);
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.mechanisms.Indexer;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;</code><p>Importa la base común de los mecanismos.</p></li><li value="4"><code>import org.firstinspires.ftc.teamcode.robot.Robot;</code><p>Importa el contenedor compartido del hardware y mecanismos.</p></li><li value="6"><code>public class Indexer extends EctoMechanism {</code><p>Define el mecanismo Indexer con la base común EctoMechanism; no es un OpMode.</p></li><li value="7"><code>public Indexer(Robot robot) {</code><p>Constructor: recibe Robot y el nombre del motor que debe buscar en hardwareMap.</p></li><li value="8"><code>super(robot);</code><p>Entrega el Robot a EctoMechanism; así heredamos robot, hardwareMap y telemetry.</p></li><li value="9"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="10"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>EctoMechanism</code> aporta <code>robot</code>, <code>hardwareMap</code> y <code>telemetry</code>. La clase del mecanismo hereda esa base; el TeleOp heredará <code>RobotOpMode</code>.</p>
+<details class="details"><summary>Si todavía usas la clase plana del ZIP</summary><div class="details-body"><p>Muévela con Refactor → Move y actualiza sus imports. No dejes simultáneamente la clase <code>mechanisms.Indexer</code> y el package <code>mechanisms.Indexer</code>.</p></div></details></div></section><section class="lesson-step" id="indexer-motor"><div class="lesson-step-heading"><span class="lesson-step-number">2</span><h2>Agrega el motor y los estados</h2></div><div class="lesson-step-body">
+<p>Añade estos imports al principio del archivo. Declara los campos dentro de la clase, fuera de los métodos.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-motor-imports">Copiar código</button></div><p class="code-placement">Imports junto a EctoMechanism y Robot.</p><pre><code id="indexer-motor-imports" class="java-highlight">import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import com.qualcomm.robotcore.hardware.DcMotorEx;</code><p>Importa el motor del SDK FTC con lecturas de velocidad y corriente.</p></li><li value="2"><code>import com.qualcomm.robotcore.hardware.DcMotorSimple;</code><p>Importa la enumeración de dirección del motor.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-fields">Copiar código</button></div><p class="code-placement">Campos y enum dentro de la clase, antes del constructor.</p><pre><code id="indexer-fields" class="java-highlight">private boolean slowMode = false;
+
+private Mode mode = Mode.OFF;
+public static double fastPower = -1;
+public static double slowPower = -1;
+public static double offPower = 0;
+public static double reversePower = 1;
+public static double shortReverseTimeMs = 150;
+private final DcMotorEx indexerMotor;
+
+enum Mode {
+    ON,
+    OFF,
+    REVERSE
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>private boolean slowMode = false;</code><p>Guarda si se seleccionó la potencia lenta; empieza en modo rápido.</p></li><li value="3"><code>private Mode mode = Mode.OFF;</code><p>Guarda el estado del mecanismo e inicia detenido en OFF.</p></li><li value="4"><code>public static double fastPower = -1;</code><p>Potencia de avance: -1 en el código del equipo.</p></li><li value="5"><code>public static double slowPower = -1;</code><p>Potencia lenta. También es -1 en esta versión, así que todavía no reduce velocidad.</p></li><li value="6"><code>public static double offPower = 0;</code><p>Potencia de parada: 0.</p></li><li value="7"><code>public static double reversePower = 1;</code><p>Potencia de retroceso: +1; el sentido físico también depende de la dirección y del montaje.</p></li><li value="8"><code>public static double shortReverseTimeMs = 150;</code><p>Duración de la reversa corta: 150 milisegundos.</p></li><li value="9"><code>private final DcMotorEx indexerMotor;</code><p>Declara el motor: private lo encapsula; final exige asignar su referencia una vez en el constructor.</p></li><li value="11"><code>enum Mode {</code><p>Agrupa los tres estados válidos del mecanismo.</p></li><li value="12"><code>ON,</code><p>Estado de avance: el periódico aplicará fastPower o slowPower.</p></li><li value="13"><code>OFF,</code><p>Estado detenido: el periódico aplicará offPower.</p></li><li value="14"><code>REVERSE</code><p>Estado de retroceso: el periódico aplicará reversePower.</p></li><li value="15"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>OFF</code> detiene, <code>ON</code> avanza y <code>REVERSE</code> retrocede. Las potencias válidas van de -1 a 1; son potencia solicitada, no una velocidad garantizada. Aquí <code>fastPower</code> y <code>slowPower</code> valen -1, así que el modo lento todavía no reduce la salida.</p>
+<p>Sustituye el constructor anterior por este; <code>motorId</code> es el nombre que Robot entregará a hardwareMap.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-constructor">Copiar código</button></div><p class="code-placement">Reemplaza el constructor anterior.</p><pre><code id="indexer-constructor" class="java-highlight">public Indexer(Robot robot, String motorId) {
+    super(robot);
+    indexerMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);
+    indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Indexer(Robot robot, String motorId) {</code><p>Constructor: recibe Robot y el nombre del motor que debe buscar en hardwareMap.</p></li><li value="2"><code>super(robot);</code><p>Entrega el Robot a EctoMechanism; así heredamos robot, hardwareMap y telemetry.</p></li><li value="3"><code>indexerMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);</code><p>Busca el dispositivo DcMotorEx cuyo nombre coincide con motorId y guarda su referencia.</p></li><li value="4"><code>indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);</code><p>Invierte por software el sentido del motor, como en la implementación del equipo.</p></li><li value="5"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Usamos la dirección y los signos del proyecto. Comprueba el avance físico en el montaje real. Indexer no lleva <code>@Config</code> en el ZIP: sus campos no aparecen automáticamente como ajustes de Dashboard por ser <code>public static</code>.</p></div></section><section class="lesson-step" id="indexer-periodic"><div class="lesson-step-heading"><span class="lesson-step-number">3</span><h2>Aplica el estado en periodic()</h2></div><div class="lesson-step-body">
+<p>Asignar <code>mode = Mode.ON</code> solo guarda una intención. El periódico la convierte en potencia y añade corriente y velocidad a la telemetría.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-periodic-imports">Copiar código</button></div><p class="code-placement">Añade estos imports.</p><pre><code id="indexer-periodic-imports" class="java-highlight">import static com.pedropathing.ivy.commands.Commands.infinite;
+import com.pedropathing.ivy.Command;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import static com.pedropathing.ivy.commands.Commands.infinite;</code><p>Importa la función que construye comandos repetidos.</p></li><li value="2"><code>import com.pedropathing.ivy.Command;</code><p>Importa el tipo de comando Ivy.</p></li><li value="3"><code>import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;</code><p>Importa las unidades de corriente del SDK.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-periodic-code">Copiar código</button></div><p class="code-placement">Dentro de la clase; reemplaza un periodic vacío.</p><pre><code id="indexer-periodic-code" class="java-highlight">@Override
+public Command periodic() {
+    return infinite(() -&gt; {
+        switch (mode) {
+            case ON:
+                indexerMotor.setPower(slowMode ? slowPower : fastPower);
+                break;
+            case OFF:
+                indexerMotor.setPower(offPower);
+                break;
+            case REVERSE:
+                indexerMotor.setPower(reversePower);
+                break;
+        }
+
+        telemetry.addData(&quot;Indexer Current&quot;, indexerMotor.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData(&quot;Indexer Velocity&quot;, indexerMotor.getVelocity());
+    });
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="2"><code>public Command periodic() {</code><p>Devuelve el comando que aplica continuamente el estado al motor.</p></li><li value="3"><code>return infinite(() -&gt; {</code><p>Crea un comando que repetirá las instrucciones de su cuerpo cuando lo procese el scheduler.</p></li><li value="4"><code>switch (mode) {</code><p>Elige la salida del motor según el estado actual del mecanismo.</p></li><li value="5"><code>case ON:</code><p>Selecciona la potencia de avance cuando el estado es ON.</p></li><li value="6"><code>indexerMotor.setPower(slowMode ? slowPower : fastPower);</code><p>Aplica slowPower si slowMode es true; en caso contrario, fastPower.</p></li><li value="7"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="8"><code>case OFF:</code><p>Selecciona la salida de parada cuando mode es OFF.</p></li><li value="9"><code>indexerMotor.setPower(offPower);</code><p>Escribe la potencia de parada en el motor.</p></li><li value="10"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="11"><code>case REVERSE:</code><p>Selecciona la potencia de retroceso cuando el estado es REVERSE.</p></li><li value="12"><code>indexerMotor.setPower(reversePower);</code><p>Aplica al motor la potencia de retroceso.</p></li><li value="13"><code>break;</code><p>Termina este caso del switch para no ejecutar los siguientes.</p></li><li value="14"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="16"><code>telemetry.addData(&quot;Indexer Current&quot;, indexerMotor.getCurrent(CurrentUnit.MILLIAMPS));</code><p>Añade la corriente medida en miliamperios a la telemetría.</p></li><li value="17"><code>telemetry.addData(&quot;Indexer Velocity&quot;, indexerMotor.getVelocity());</code><p>Añade la velocidad medida del motor, en ticks por segundo.</p></li><li value="18"><code>});</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="19"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>infinite(...)</code> devuelve el comando repetido; en el paso 7 lo programaremos una vez en RobotOpMode. No crea un hilo. <code>robot.telemetry.update()</code>, en la base, publica los datos reunidos.</p></div></section><section class="lesson-step" id="indexer-comandos"><div class="lesson-step-heading"><span class="lesson-step-number">4</span><h2>Crea los comandos básicos</h2></div><div class="lesson-step-body">
+<p>Los métodos de Indexer devuelven comandos Ivy. Cambian el estado y declaran el motor como recurso; <code>periodic()</code> aplica la salida.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-command-imports">Copiar código</button></div><p class="code-placement">Imports de los comandos.</p><pre><code id="indexer-command-imports" class="java-highlight">import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.conditional;
+import static com.pedropathing.ivy.commands.Commands.waitMs;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import static com.pedropathing.ivy.commands.Commands.instant;</code><p>Importa la función que construye una acción instantánea.</p></li><li value="2"><code>import static com.pedropathing.ivy.commands.Commands.conditional;</code><p>Importa la función que selecciona un comando según una condición.</p></li><li value="3"><code>import static com.pedropathing.ivy.commands.Commands.waitMs;</code><p>Importa una espera de comando en milisegundos; no bloquea el hilo con un sleep.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-basic-commands">Copiar código</button></div><p class="code-placement">Métodos dentro de la clase, fuera de periodic().</p><pre><code id="indexer-basic-commands" class="java-highlight">public com.pedropathing.ivy.Command on() {
+    return instant(() -&gt; mode = Indexer.Mode.ON).requiring(indexerMotor);
+}
+
+public com.pedropathing.ivy.Command off() {
+    return instant(() -&gt; mode = Indexer.Mode.OFF).requiring(indexerMotor);
+}
+
+public com.pedropathing.ivy.Command reverse() {
+    return instant(() -&gt; mode = Indexer.Mode.REVERSE).requiring(indexerMotor);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public com.pedropathing.ivy.Command on() {</code><p>Construye una orden de encendido. El tipo con su paquete completo equivale a Command importado.</p></li><li value="2"><code>return instant(() -&gt; mode = Indexer.Mode.ON).requiring(indexerMotor);</code><p>Crea un comando instantáneo que pide ON y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="3"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="5"><code>public com.pedropathing.ivy.Command off() {</code><p>Construye una orden de apagado. El tipo con su paquete completo equivale a Command importado.</p></li><li value="6"><code>return instant(() -&gt; mode = Indexer.Mode.OFF).requiring(indexerMotor);</code><p>Crea un comando instantáneo que pide OFF y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="9"><code>public com.pedropathing.ivy.Command reverse() {</code><p>Construye un comando de retroceso; el tipo escrito completo equivale a Command importado.</p></li><li value="10"><code>return instant(() -&gt; mode = Indexer.Mode.REVERSE).requiring(indexerMotor);</code><p>Crea un comando instantáneo que pide REVERSE y declara el motor como recurso; aquí todavía no lo programa.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>com.pedropathing.ivy.Command</code> es el mismo tipo <code>Command</code> que importamos. <code>on()</code> construye la orden; <code>on().schedule()</code> la programa. El estado permanece hasta que otra acción lo cambie.</p>
+<details class="details"><summary>Atajos: toggle, reversa corta y modo lento</summary><div class="details-body"><p><code>toggle()</code> alterna OFF/ON; <code>shortReverse()</code> retrocede 150 ms y termina en ON. <code>slowDown()</code> y <code>speedUp()</code> seleccionan una potencia; no son comandos Ivy.</p><div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-shortcuts">Copiar código</button></div><p class="code-placement">Métodos auxiliares dentro de la clase.</p><pre><code id="indexer-shortcuts" class="java-highlight">public com.pedropathing.ivy.Command toggle() {
+    return conditional(() -&gt; mode == Indexer.Mode.OFF, on(), off());
+}
+
+public com.pedropathing.ivy.Command shortReverse() {
+    return reverse().then(waitMs(shortReverseTimeMs)).then(on());
+}
+
+public void slowDown() {
+    slowMode = true;
+}
+
+public void speedUp() {
+    slowMode = false;
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public com.pedropathing.ivy.Command toggle() {</code><p>Construye una orden para alternar entre apagado y encendido. El tipo con su paquete completo equivale a Command importado.</p></li><li value="2"><code>return conditional(() -&gt; mode == Indexer.Mode.OFF, on(), off());</code><p>Si el estado es OFF selecciona on(); en los demás casos selecciona off().</p></li><li value="3"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="5"><code>public com.pedropathing.ivy.Command shortReverse() {</code><p>Construye una secuencia de reversa breve. El tipo con su paquete completo equivale a Command importado.</p></li><li value="6"><code>return reverse().then(waitMs(shortReverseTimeMs)).then(on());</code><p>Encadena reversa, espera de 150 ms y encendido. Termina en ON, no en el estado anterior.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="9"><code>public void slowDown() {</code><p>Selecciona la potencia lenta; no crea ni programa un comando.</p></li><li value="10"><code>slowMode = true;</code><p>Selecciona la potencia de modo lento para las siguientes actualizaciones.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="13"><code>public void speedUp() {</code><p>Selecciona la potencia rápida; no crea ni programa un comando.</p></li><li value="14"><code>slowMode = false;</code><p>Selecciona la potencia de modo rápido para las siguientes actualizaciones.</p></li><li value="15"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details></div></details></div></section><section class="lesson-step" id="indexer-shoot"><div class="lesson-step-heading"><span class="lesson-step-number">5</span><h2>Alimenta mientras se mantiene el botón</h2></div><div class="lesson-step-body">
+<p><code>shoot(...)</code> pide ON al empezar, consulta el botón mientras corre y termina en OFF al soltarlo. Esa es la diferencia principal frente al intake, cuyo outtake termina en ON y convive con un comando predeterminado.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-shoot-import">Copiar código</button></div><p class="code-placement">Import adicional.</p><pre><code id="indexer-shoot-import" class="java-highlight">import java.util.function.BooleanSupplier;</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>import java.util.function.BooleanSupplier;</code><p>Importa una función que devuelve un booleano al consultarla.</p></li></ol></details>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-shoot-code">Copiar código</button></div><p class="code-placement">Método dentro de Indexer.</p><pre><code id="indexer-shoot-code" class="java-highlight">public Command shoot(BooleanSupplier held) {
+    return Command.build()
+            .setStart(() -&gt; mode = Mode.ON)
+            .setDone(() -&gt; !held.getAsBoolean())
+            .setEnd(endCondition -&gt; mode = Mode.OFF)
+            .requiring(indexerMotor);
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>public Command shoot(BooleanSupplier held) {</code><p>Construye la alimentación mientras el botón siga pulsado; held permite consultar su estado después.</p></li><li value="2"><code>return Command.build()</code><p>Empieza a construir un comando con inicio, condición de término y finalización.</p></li><li value="3"><code>.setStart(() -&gt; mode = Mode.ON)</code><p>Al iniciar shoot, solicita avance del indexer.</p></li><li value="4"><code>.setDone(() -&gt; !held.getAsBoolean())</code><p>Termina cuando el botón deja de estar presionado; ! invierte el booleano consultado.</p></li><li value="5"><code>.setEnd(endCondition -&gt; mode = Mode.OFF)</code><p>Al finalizar shoot, solicita OFF. La causa endCondition no se usa aquí.</p></li><li value="6"><code>.requiring(indexerMotor);</code><p>Declara el motor como recurso del comando; no significa que asigne potencia directamente.</p></li><li value="7"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>BooleanSupplier</code> es una función que devuelve true o false al consultarla; <code>() -&gt;</code> define una acción o condición que Ivy ejecutará después. <code>!held.getAsBoolean()</code> significa “ya no está presionado”.</p>
+<p><code>.requiring(indexerMotor)</code> permite resolver conflictos con órdenes para ese motor. Este método no fija una prioridad explícita y Indexer no tiene <code>defaultCommand()</code>. En la prueba solo asignaremos shoot; no programes a la vez otro comando sobre su motor.</p>
+<p>El nombre shoot se refiere a alimentar con el indexer: este código no enciende un flywheel ni comprueba si salió una pieza.</p></div></section><section class="lesson-step" id="indexer-robot"><div class="lesson-step-heading"><span class="lesson-step-number">6</span><h2>Agrega Indexer a Robot</h2></div><div class="lesson-step-body">
+<p>Continúa con el intake integrado. En <code>robot/Robot.java</code>, añade el <strong>import</strong> de <code>mechanisms.Indexer.Indexer</code>, el <strong>campo</strong> <code>public final Indexer indexer;</code> junto a los mecanismos y su <strong>construcción</strong> en el constructor, después de hardwareMap y telemetría.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Robot.java</strong></div><button class="copy-button" data-copy="indexer-robot-file">Copiar código</button></div><p class="code-placement">Archivo completo: conserva chasis e intake y agrega indexer.</p><pre><code id="indexer-robot-file" class="java-highlight">package org.firstinspires.ftc.teamcode.robot;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.mechanisms.EctoMecanum.EctoMecanum;
+import org.firstinspires.ftc.teamcode.mechanisms.Intake.Intake;
+import org.firstinspires.ftc.teamcode.mechanisms.Indexer.Indexer;
+
+public class Robot {
+    public final HardwareMap hardwareMap;
+    public final Telemetry telemetry;
+    public final EctoMecanum mecanum;
+    public final Intake intake;
+    public final Indexer indexer;
+
+    public Robot(OpMode opMode) {
+        hardwareMap = opMode.hardwareMap;
+        telemetry = new MultipleTelemetry(
+            opMode.telemetry,
+            FtcDashboard.getInstance().getTelemetry()
+        );
+        mecanum = new EctoMecanum(this);
+        intake = new Intake(this, &quot;intake&quot;);
+        indexer = new Indexer(this, &quot;indexer&quot;);
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robot;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.acmerobotics.dashboard.FtcDashboard;</code><p>Importa el acceso a Dashboard.</p></li><li value="4"><code>import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;</code><p>Importa la combinación de varias salidas de telemetría.</p></li><li value="5"><code>import com.qualcomm.robotcore.eventloop.opmode.OpMode;</code><p>Importa el tipo base de un modo FTC.</p></li><li value="6"><code>import com.qualcomm.robotcore.hardware.HardwareMap;</code><p>Importa el mapa de dispositivos del robot.</p></li><li value="7"><code>import org.firstinspires.ftc.robotcore.external.Telemetry;</code><p>Importa el tipo de datos enviados al conductor.</p></li><li value="8"><code>import org.firstinspires.ftc.teamcode.mechanisms.EctoMecanum.EctoMecanum;</code><p>Importa el chasis existente.</p></li><li value="9"><code>import org.firstinspires.ftc.teamcode.mechanisms.Intake.Intake;</code><p>Importa la clase Intake de la nueva subcarpeta.</p></li><li value="10"><code>import org.firstinspires.ftc.teamcode.mechanisms.Indexer.Indexer;</code><p>Importa Indexer desde mechanisms.Indexer, la carpeta de esta práctica.</p></li><li value="12"><code>public class Robot {</code><p>Agrupa el hardware compartido y las instancias de los mecanismos.</p></li><li value="13"><code>public final HardwareMap hardwareMap;</code><p>Guarda una referencia compartida: hardwareMap. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="14"><code>public final Telemetry telemetry;</code><p>Guarda una referencia compartida: telemetry. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="15"><code>public final EctoMecanum mecanum;</code><p>Guarda una referencia compartida: mecanum. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="16"><code>public final Intake intake;</code><p>Guarda una referencia compartida: intake. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="17"><code>public final Indexer indexer;</code><p>Declara el campo de Robot: Indexer es el tipo e indexer es la referencia que compartirán los OpModes.</p></li><li value="19"><code>public Robot(OpMode opMode) {</code><p>Constructor de Robot: recibe el OpMode que lo está creando.</p></li><li value="20"><code>hardwareMap = opMode.hardwareMap;</code><p>Conserva el mapa de hardware del OpMode para compartirlo con los mecanismos.</p></li><li value="21"><code>telemetry = new MultipleTelemetry(</code><p>Prepara una telemetría combinada para Driver Station y Dashboard.</p></li><li value="22"><code>opMode.telemetry,</code><p>Incluye la telemetría que ve el conductor en Driver Station.</p></li><li value="23"><code>FtcDashboard.getInstance().getTelemetry()</code><p>Incluye la telemetría que se publica en FTC Dashboard.</p></li><li value="24"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="25"><code>mecanum = new EctoMecanum(this);</code><p>Conserva el chasis de la práctica; aquí this es Robot.</p></li><li value="26"><code>intake = new Intake(this, &quot;intake&quot;);</code><p>Construye el mecanismo y le pasa Robot y el nombre exacto del motor en la configuración FTC.</p></li><li value="27"><code>indexer = new Indexer(this, &quot;indexer&quot;);</code><p>Construye Indexer con este Robot y con el nombre exacto del motor en la configuración FTC.</p></li><li value="28"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="29"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>En <code>Indexer indexer</code>, <code>Indexer</code> es el tipo e <code>indexer</code> la referencia compartida. En <code>new Indexer(this, "indexer")</code>, this es Robot y el texto es el nombre del motor en FTC. No crees otro Indexer dentro del TeleOp.</p></div></section><section class="lesson-step" id="indexer-opmode"><div class="lesson-step-heading"><span class="lesson-step-number">7</span><h2>Programa el periódico en RobotOpMode</h2></div><div class="lesson-step-body">
+<p>En <code>robot/RobotOpMode.java</code>, dentro de <code>init()</code> y después de construir Robot, agrega <code>robot.indexer.periodic()</code> al schedule existente. Conserva chasis e intake y separa los argumentos con comas.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>RobotOpMode.java</strong></div><button class="copy-button" data-copy="indexer-opmode-file">Copiar código</button></div><p class="code-placement">Base completa después de los dos mecanismos.</p><pre><code id="indexer-opmode-file" class="java-highlight">package org.firstinspires.ftc.teamcode.robot;
+
+import static com.pedropathing.ivy.Scheduler.schedule;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;
+import com.pedropathing.ivy.Scheduler;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.teamcode.core.Control.EctoButton;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class RobotOpMode extends OpMode {
+    protected Robot robot;
+    private final List&lt;EctoButton&gt; buttons = new ArrayList&lt;&gt;();
+
+    @Override
+    public void init() {
+        buttons.clear();
+        Scheduler.reset();
+        robot = new Robot(this);
+        schedule(
+            robot.mecanum.periodic(),
+            robot.intake.periodic(),
+            robot.indexer.periodic()
+        );
+    }
+
+    protected EctoButton button(GamepadEx gamepad, Button key) {
+        EctoButton button = new EctoButton(gamepad, key);
+        buttons.add(button);
+        return button;
+    }
+
+    @Override
+    public void init_loop() {
+        Scheduler.execute();
+    }
+
+    @Override
+    public void loop() {
+        buttons.forEach(EctoButton::update);
+        Scheduler.execute();
+        robot.telemetry.update();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robot;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import static com.pedropathing.ivy.Scheduler.schedule;</code><p>Permite programar comandos sin escribir Scheduler delante.</p></li><li value="4"><code>import com.arcrobotics.ftclib.gamepad.GamepadEx;</code><p>Importa la envoltura del control de FTCLib.</p></li><li value="5"><code>import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;</code><p>Importa el tipo de botón de FTCLib.</p></li><li value="6"><code>import com.pedropathing.ivy.Scheduler;</code><p>Importa el planificador de comandos Ivy.</p></li><li value="7"><code>import com.qualcomm.robotcore.eventloop.opmode.OpMode;</code><p>Importa el tipo base de un modo FTC.</p></li><li value="8"><code>import org.firstinspires.ftc.teamcode.core.Control.EctoButton;</code><p>Importa el lector que conecta botones con comandos.</p></li><li value="9"><code>import java.util.ArrayList;</code><p>Importa la implementación de lista usada para los botones.</p></li><li value="10"><code>import java.util.List;</code><p>Importa la interfaz de listas de Java.</p></li><li value="12"><code>public abstract class RobotOpMode extends OpMode {</code><p>Define la clase base común; abstract evita instanciarla directamente.</p></li><li value="13"><code>protected Robot robot;</code><p>Guarda una referencia compartida: robot. Los campos de mecanismos se declaran dentro de Robot, fuera del constructor.</p></li><li value="14"><code>private final List&lt;EctoButton&gt; buttons = new ArrayList&lt;&gt;();</code><p>Conserva los lectores registrados en una lista que actualizará la base.</p></li><li value="16"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="17"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="18"><code>buttons.clear();</code><p>Vacía los botones registrados por la base al preparar el OpMode.</p></li><li value="19"><code>Scheduler.reset();</code><p>Limpia los comandos que conservaba el scheduler.</p></li><li value="20"><code>robot = new Robot(this);</code><p>Crea Robot para este OpMode; aquí this es el OpMode.</p></li><li value="21"><code>schedule(</code><p>Entrega al scheduler los comandos periódicos que aparecen a continuación.</p></li><li value="22"><code>robot.mecanum.periodic(),</code><p>Conserva la actualización del chasis que ya estaba en la base.</p></li><li value="23"><code>robot.intake.periodic(),</code><p>Conserva la actualización del intake ya integrado.</p></li><li value="24"><code>robot.indexer.periodic()</code><p>Programa la actualización del indexer en la misma llamada, sin duplicar los periódicos anteriores.</p></li><li value="25"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="26"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="28"><code>protected EctoButton button(GamepadEx gamepad, Button key) {</code><p>Helper heredado: crea un lector y lo registra antes de devolverlo.</p></li><li value="29"><code>EctoButton button = new EctoButton(gamepad, key);</code><p>Construye el lector del control y el botón recibidos por el helper.</p></li><li value="30"><code>buttons.add(button);</code><p>Registra el nuevo EctoButton para que la base lo actualice.</p></li><li value="31"><code>return button;</code><p>Devuelve el lector registrado para poder asociarle un comando.</p></li><li value="32"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="34"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="35"><code>public void init_loop() {</code><p>Se repite mientras se espera START.</p></li><li value="36"><code>Scheduler.execute();</code><p>Procesa los comandos programados en esta vuelta del ciclo.</p></li><li value="37"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="39"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="40"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="41"><code>buttons.forEach(EctoButton::update);</code><p>Actualiza cada lector registrado para detectar pulsaciones y liberaciones.</p></li><li value="42"><code>Scheduler.execute();</code><p>Procesa los comandos programados en esta vuelta del ciclo.</p></li><li value="43"><code>robot.telemetry.update();</code><p>Publica los datos reunidos por el robot y los mecanismos.</p></li><li value="44"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="45"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Se programa cada periódico una vez. La base procesa el scheduler en <code>init_loop()</code> y <code>loop()</code>; este último también actualiza EctoButton y publica telemetría. El helper <code>button(...)</code> registra los lectores que usaremos en el TeleOp.</p></div></section><section class="lesson-step" id="indexer-teleop"><div class="lesson-step-heading"><span class="lesson-step-number">8</span><h2>Conecta el botón a un TeleOp</h2></div><div class="lesson-step-body">
+<p>En <code>robotOpModes/Comp/</code>, crea <code>IndexerTeleOp.java</code>. Comienza con este modo vacío:</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>IndexerTeleOp.java</strong></div><button class="copy-button" data-copy="indexer-teleop-empty">Copiar código</button></div><p class="code-placement">Primera versión: todavía no asigna botones.</p><pre><code id="indexer-teleop-empty" class="java-highlight">package org.firstinspires.ftc.teamcode.robotOpModes.Comp;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+
+@TeleOp(name = &quot;Prueba Indexer&quot;, group = &quot;2-tests&quot;)
+public class IndexerTeleOp extends RobotOpMode {
+    @Override
+    public void init() {
+        super.init();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robotOpModes.Comp;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.qualcomm.robotcore.eventloop.opmode.TeleOp;</code><p>Importa la anotación que registra el modo en FTC.</p></li><li value="4"><code>import org.firstinspires.ftc.teamcode.robot.RobotOpMode;</code><p>Importa la base de los OpModes del equipo.</p></li><li value="6"><code>@TeleOp(name = &quot;Prueba Indexer&quot;, group = &quot;2-tests&quot;)</code><p>Registra Prueba Indexer en Driver Station, dentro del grupo 2-tests.</p></li><li value="7"><code>public class IndexerTeleOp extends RobotOpMode {</code><p>Define el modo seleccionable y hereda Robot, scheduler y lectura de botones.</p></li><li value="8"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="9"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="10"><code>super.init();</code><p>Ejecuta la inicialización de RobotOpMode antes de usar robot o registrar controles.</p></li><li value="11"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="13"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="14"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="15"><code>super.loop();</code><p>Mantiene la actualización de botones, scheduler y telemetría de la clase base.</p></li><li value="16"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="17"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p>Ahora reemplázalo por esta versión. <code>button(...)</code> crea un EctoButton para la cruceta arriba; <code>whenActive</code> programa shoot al pulsarla.</p>
+<div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>IndexerTeleOp.java</strong></div><button class="copy-button" data-copy="indexer-teleop-final">Copiar código</button></div><p class="code-placement">Archivo completo de la prueba de Indexer.</p><pre><code id="indexer-teleop-final" class="java-highlight">package org.firstinspires.ftc.teamcode.robotOpModes.Comp;
+
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.core.Control.EctoButton;
+import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+
+@TeleOp(name = &quot;Prueba Indexer&quot;, group = &quot;2-tests&quot;)
+public class IndexerTeleOp extends RobotOpMode {
+    private GamepadEx gamepad;
+    private EctoButton shoot;
+
+    @Override
+    public void init() {
+        super.init();
+        gamepad = new GamepadEx(gamepad1);
+        shoot = button(gamepad, GamepadKeys.Button.DPAD_UP);
+        shoot.whenActive(
+            robot.indexer.shoot(shoot::isPressed)
+        );
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+    }
+}</code></pre></div><details class="line-notes"><summary>Explicar este bloque, línea por línea</summary><p class="line-notes-intro">Los números corresponden a este bloque.</p><ol><li value="1"><code>package org.firstinspires.ftc.teamcode.robotOpModes.Comp;</code><p>Define el paquete. Debe coincidir con la ubicación de este archivo dentro de teamcode.</p></li><li value="3"><code>import com.arcrobotics.ftclib.gamepad.GamepadEx;</code><p>Importa la envoltura del control de FTCLib.</p></li><li value="4"><code>import com.arcrobotics.ftclib.gamepad.GamepadKeys;</code><p>Importa los nombres de botones de FTCLib.</p></li><li value="5"><code>import com.qualcomm.robotcore.eventloop.opmode.TeleOp;</code><p>Importa la anotación que registra el modo en FTC.</p></li><li value="6"><code>import org.firstinspires.ftc.teamcode.core.Control.EctoButton;</code><p>Importa el lector que conecta botones con comandos.</p></li><li value="7"><code>import org.firstinspires.ftc.teamcode.robot.RobotOpMode;</code><p>Importa la base de los OpModes del equipo.</p></li><li value="9"><code>@TeleOp(name = &quot;Prueba Indexer&quot;, group = &quot;2-tests&quot;)</code><p>Registra Prueba Indexer en Driver Station, dentro del grupo 2-tests.</p></li><li value="10"><code>public class IndexerTeleOp extends RobotOpMode {</code><p>Define el modo seleccionable y hereda Robot, scheduler y lectura de botones.</p></li><li value="11"><code>private GamepadEx gamepad;</code><p>Guarda el control de FTCLib que se inicializará en init().</p></li><li value="12"><code>private EctoButton shoot;</code><p>Guarda el lector de la cruceta arriba para consultarlo durante shoot.</p></li><li value="14"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="15"><code>public void init() {</code><p>Se ejecuta al presionar INIT; prepara el modo antes de START.</p></li><li value="16"><code>super.init();</code><p>Ejecuta la inicialización de RobotOpMode antes de usar robot o registrar controles.</p></li><li value="17"><code>gamepad = new GamepadEx(gamepad1);</code><p>Envuelve el primer control FTC con las funciones de FTCLib.</p></li><li value="18"><code>shoot = button(gamepad, GamepadKeys.Button.DPAD_UP);</code><p>Crea y registra el lector de la cruceta arriba mediante el helper heredado.</p></li><li value="19"><code>shoot.whenActive(</code><p>Asocia un comando al instante en que se pulsa la cruceta arriba.</p></li><li value="20"><code>robot.indexer.shoot(shoot::isPressed)</code><p>Usa el indexer compartido; la referencia de método consulta si el botón sigue presionado.</p></li><li value="21"><code>);</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="22"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="24"><code>@Override</code><p>Indica que el método reemplaza una implementación heredada.</p></li><li value="25"><code>public void loop() {</code><p>Se repite mientras el modo está activo.</p></li><li value="26"><code>super.loop();</code><p>Mantiene la actualización de botones, scheduler y telemetría de la clase base.</p></li><li value="27"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li><li value="28"><code>}</code><p>Cierra el bloque o la llamada abierta en las líneas anteriores.</p></li></ol></details>
+<p><code>shoot::isPressed</code> entrega el método que lee el botón después; pasar su resultado una sola vez no serviría para detectar que se soltó. Conserva <code>super.init()</code> antes de usar Robot y <code>super.loop()</code> para procesar controles y comandos.</p>
+<div class="table-wrap"><table class="guide-table"><thead><tr><th>Momento</th><th>Resultado</th></tr></thead><tbody><tr><th>INIT y START</th><td>Indexer permanece en OFF. Este TeleOp no programa un encendido automático.</td></tr><tr><th>Cruceta arriba mantenida</th><td>shoot solicita ON y el periódico aplica la potencia.</td></tr><tr><th>Soltar cruceta</th><td>shoot termina y solicita OFF.</td></tr></tbody></table></div>
+<p>Esta prueba no conduce ni enciende el intake, pero Robot construye los tres mecanismos: deben existir los cuatro motores del chasis, Pinpoint y los motores <code>"intake"</code> y <code>"indexer"</code>. Sigue <a class="inline-source" href="#codigo/probar-cambios">los pasos para compilar, instalar y probar</a>.</p>
+<details class="details"><summary>Unir chasis, intake e indexer en un TeleOp</summary><div class="details-body"><p>Después de probarlos por separado, crea <code>MechanismsTeleOp.java</code>. Mantiene el manejo del chasis, inicia la recolección en START, usa Y para outtake y cruceta arriba para shoot. La alianza roja y la pose (8, 8, 0°) vienen del ejemplo del equipo: ajústalas a la colocación física antes de conducir.</p><div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>MechanismsTeleOp.java</strong></div><button class="copy-button" data-copy="indexer-combined-teleop">Copiar código</button></div><p class="code-placement">Archivo completo para probar los tres mecanismos juntos.</p><pre><code id="indexer-combined-teleop" class="java-highlight">package org.firstinspires.ftc.teamcode.robotOpModes.Comp;
+
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.pedropathing.math.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.core.Control.EctoButton;
+import org.firstinspires.ftc.teamcode.robot.Alliance;
+import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+
+@TeleOp(name = &quot;Practica Mecanismos&quot;, group = &quot;2-tests&quot;)
+public class MechanismsTeleOp extends RobotOpMode {
+    private GamepadEx gamepad;
+    private EctoButton outtake, shoot;
+
+    @Override
+    public void init() {
+        super.init();
+        gamepad = new GamepadEx(gamepad1);
+        robot.mecanum.setAlliance(Alliance.RED);
+        robot.mecanum.setStartingPose(new Pose(8, 8, Math.toRadians(0)));
+
+        outtake = button(gamepad, GamepadKeys.Button.Y);
+        outtake.whenActive(robot.intake.outtake(outtake::isPressed));
+
+        shoot = button(gamepad, GamepadKeys.Button.DPAD_UP);
+        shoot.whenActive(robot.indexer.shoot(shoot::isPressed));
+    }
+
+    @Override
+    public void start() {
+        robot.intake.defaultCommand().schedule();
+    }
+
+    @Override
+    public void loop() {
+        robot.mecanum.drive(gamepad);
+        super.loop();
+    }
+}</code></pre></div></div></details>
+<details class="details"><summary>Consultar Indexer.java completo</summary><div class="details-body"><div class="lesson-code"><div class="lesson-code-head"><div><span class="code-language">JAVA</span><strong>Indexer.java</strong></div><button class="copy-button" data-copy="indexer-final-file">Copiar código</button></div><p class="code-placement">Referencia final después de construir los pasos anteriores.</p><pre><code id="indexer-final-file" class="java-highlight">package org.firstinspires.ftc.teamcode.mechanisms.Indexer;
+
+import static com.pedropathing.ivy.commands.Commands.conditional;
+import static com.pedropathing.ivy.commands.Commands.infinite;
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+
+import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.core.BaseClasses.EctoMechanism;
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+import java.util.function.BooleanSupplier;
+
+public class Indexer extends EctoMechanism {
+
+    private boolean slowMode = false;
+
+    private Mode mode = Mode.OFF;
+    public static double fastPower = -1;
+    public static double slowPower = -1;
+    public static double offPower = 0;
+    public static double reversePower = 1;
+    public static double shortReverseTimeMs = 150;
+    private final DcMotorEx indexerMotor;
+    public Indexer(Robot robot, String motorId) {
+        super(robot);
+        indexerMotor = robot.hardwareMap.get(DcMotorEx.class, motorId);
+        indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+
+    public Command shoot(BooleanSupplier held) {
+        return Command.build()
+                .setStart(() -&gt; mode = Mode.ON)
+                .setDone(() -&gt; !held.getAsBoolean())
+                .setEnd(endCondition -&gt; mode = Mode.OFF)
+                .requiring(indexerMotor);
+    }
+
+    public com.pedropathing.ivy.Command on() {
+        return instant(() -&gt; mode = Indexer.Mode.ON).requiring(indexerMotor);
+    }
+
+    public com.pedropathing.ivy.Command off() {
+        return instant(() -&gt; mode = Indexer.Mode.OFF).requiring(indexerMotor);
+    }
+
+    public com.pedropathing.ivy.Command reverse() {
+        return instant(() -&gt; mode = Indexer.Mode.REVERSE).requiring(indexerMotor);
+    }
+
+    public com.pedropathing.ivy.Command shortReverse() {
+        return reverse().then(waitMs(shortReverseTimeMs)).then(on());
+    }
+
+    public com.pedropathing.ivy.Command toggle() {
+        return conditional(() -&gt; mode == Indexer.Mode.OFF, on(), off());
+    }
+
+    public void slowDown() {
+        slowMode = true;
+    }
+
+    public void speedUp() {
+        slowMode = false;
+    }
+
+    public Command periodic() {
+        return infinite(() -&gt; {
+            switch (mode) {
+                case ON:
+                    indexerMotor.setPower(slowMode ? slowPower : fastPower);
+                    break;
+                case OFF:
+                    indexerMotor.setPower(offPower);
+                    break;
+                case REVERSE:
+                    indexerMotor.setPower(reversePower);
+                    break;
+            }
+
+            telemetry.addData(&quot;Indexer Current&quot;, indexerMotor.getCurrent(CurrentUnit.MILLIAMPS));
+            telemetry.addData(&quot;Indexer Velocity&quot;, indexerMotor.getVelocity());
+        });
+    }
+    enum Mode{
+        ON,
+        OFF,
+        REVERSE
+    }
+
+}</code></pre></div></div></details>
+<h3>Si algo no responde</h3><ul class="instructions"><li>Error de import: usa <code>mechanisms.Indexer.Indexer</code>; evita la clase plana antigua y los nombres duplicados.</li><li>Falla en INIT: lee el dispositivo del error y comprueba nombre, tipo y configuración activa de todos los mecanismos de Robot.</li><li>El botón no actúa: revisa el helper button, <code>shoot::isPressed</code> y <code>super.loop()</code>.</li><li>El estado cambia sin movimiento: verifica <code>robot.indexer.periodic()</code>, la salida y el cableado.</li><li>Queda encendido: revisa la condición de fin, el OFF de setEnd y otros comandos que puedan pedir ON.</li></ul></div></section></div><nav class="page-navigation single-page-navigation" aria-label="Navegación entre guías"><a class="next-page" href="#intake"><span><span class="next-label">ANTERIOR</span><strong>Intake</strong></span><span class="next-page-icon"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></span></a></nav><footer>Hecho por @ddiegovillanueva <span>Botbusters · FTC 13531</span></footer></article>
+  </main>
+  <dialog id="image-dialog" aria-label="Captura ampliada"><div class="dialog-head"><strong id="image-dialog-title">Captura</strong><button class="icon-button" id="close-image" aria-label="Cerrar captura">✕</button></div><img id="full-image" alt=""></dialog>
+  <dialog id="search-dialog" aria-label="Buscar en la guía"><div class="search-input-row"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search-input" type="search" placeholder="Busca una herramienta o un paso…" aria-label="Buscar"><button id="close-search" class="icon-button" aria-label="Cerrar búsqueda">✕</button></div><div id="search-results"></div><p class="search-footer">Botbusters Docs · Guía de programación</p></dialog><div class="sr-only" aria-live="polite" id="status"></div>
+</body>
+</html>
